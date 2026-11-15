@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIIT Kota Online Examination Portal | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Marquee Notice Banner -->
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            📢 <strong>IIIT KOTA EXAM NOTICE:</strong> B.Tech Semester Online Examinations are live! Candidates must
+            log in with their Roll Number before attempting an exam. Locked papers are restricted until scheduled
+            session commencement.
+        </marquee>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal</span>
+            </div>
+
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="instructions.html" class="nav-link">Guidelines</a></li>
+
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Select Subject ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="login.html?subject=WT">Web Development (CS201) [Live]</a></li>
+                        <li><a href="login.html?subject=DS">Data Structures &amp; Algorithms (CS202) [Live]</a></li>
+                        <li><a href="exam.html?subject=DBMS">Database Systems (CS203) [Locked]</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a href="results.html" class="nav-link">Scoreboard</a></li>
+                <li class="nav-item" id="navAuthSlot">
+                    <a href="login.html" class="btn-nav btn-nav-accent hover-scale">Portal Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin.html" class="btn-nav btn-nav-admin hover-scale">Admin Panel</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section class="hero-banner animate-fade-in">
+            <h1><big>IIIT Kota Smart Examination Portal</big></h1>
+            <p>Welcome to the Autonomous Academic Examination Portal for IIIT Kota. Fast, secure, and proctored online
+                evaluations aligned with the 10-point credit-based grading system.</p>
+            <div class="hero-actions">
+                <a href="instructions.html" class="btn btn-secondary hover-scale">Read Guidelines</a>
+                <a id="heroActionBtn" href="login.html?subject=WT" class="btn btn-white hover-scale">Login to Attempt
+                    Exam</a>
+            </div>
+        </section>
+
+        <!-- Subject Examination Modules -->
+        <section>
+            <div class="section-title">
+                <h2>Available Examination Modules</h2>
+                <p>Candidates must log in with their university credentials to attempt active papers. Locked papers
+                    cannot be accessed until scheduled.</p>
+            </div>
+
+            <div class="card-grid">
+
+                <!-- Module 1: Web Development -->
+                <div class="card-3d-scene">
+                    <div class="card-3d-inner">
+                        <div class="card-3d-front">
+                            <span class="card-badge badge-live">Live Now</span>
+                            <div class="card-icon">🌐</div>
+                            <h3 class="card-title">Web Development</h3>
+                            <p class="card-body">HTML5 Semantics, CSS3 Flexbox &amp; Grid, Modern JavaScript ES6+, PHP
+                                Processing, and MySQL Database Integration.</p>
+                            <span class="card-link-hint">View Exam Specs ➔</span>
+                        </div>
+                        <div class="card-3d-back">
+                            <h3>CS201 Specifications</h3>
+                            <p><strong>Total Marks:</strong> 10 (5 MCQs)<br><strong>Duration:</strong> 10
+                                Minutes<br><strong>Status:</strong> Active (Login Required)</p>
+                            <a href="login.html?subject=WT" class="btn btn-white hover-scale card-test-btn"
+                                data-subject="WT">Login to Start Test</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2: Data Structures & Algorithms -->
+                <div class="card-3d-scene">
+                    <div class="card-3d-inner">
+                        <div class="card-3d-front">
+                            <span class="card-badge badge-live">Live Now</span>
+                            <div class="card-icon">🌳</div>
+                            <h3 class="card-title">Data Structures &amp; Algorithms</h3>
+                            <p class="card-body">Asymptotic Analysis, Arrays, Linked Lists, Stacks, Queues, Binary
+                                Search Trees, Heaps, and Graph Traversals.</p>
+                            <span class="card-link-hint">View Exam Specs ➔</span>
+                        </div>
+                        <div class="card-3d-back">
+                            <h3>CS202 Specifications</h3>
+                            <p><strong>Total Marks:</strong> 10 (5 MCQs)<br><strong>Duration:</strong> 10
+                                Minutes<br><strong>Status:</strong> Active (Login Required)</p>
+                            <a href="login.html?subject=DS" class="btn btn-white hover-scale card-test-btn"
+                                data-subject="DS">Login to Start Test</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3: Database Systems (Locked) -->
+                <div class="card-3d-scene">
+                    <div class="card-3d-inner">
+                        <div class="card-3d-front">
+                            <span class="card-badge badge-locked">🔒 Paper Locked</span>
+                            <div class="card-icon">🗄️</div>
+                            <h3 class="card-title">Database Systems</h3>
+                            <p class="card-body">ER Modeling, Relational Algebra, SQL Queries, Functional Normalization
+                                (1NF–BCNF), and ACID Properties.</p>
+                            <span class="card-link-hint">View Status ➔</span>
+                        </div>
+                        <div class="card-3d-back">
+                            <h3>CS203 Locked Paper</h3>
+                            <p><strong>Status:</strong> Upcoming / Locked<br><strong>Access:</strong> Restricted to
+                                Students<br><strong>Note:</strong> Paper sealed by Admin</p>
+                            <a href="exam.html?subject=DBMS" class="btn btn-white hover-scale">View Lock Notice</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <hr class="custom-hr">
+
+        <!-- Info Section -->
+        <section class="info-section-grid">
+            <article class="ui-card hover-lift info-article">
+                <h3 class="card-title">Autonomous Online Examination Portal</h3>
+                <p class="mb-12">Engineered specifically for Indian Institute of Information Technology Kota (IIIT
+                    Kota) degree assessment requirements with proctored session integrity.</p>
+                <ul class="content-list">
+                    <li>Protected Assessment Environment: Students must authenticate before accessing examination
+                        papers.</li>
+                    <li>Strict Paper Access Security: Locked papers are inaccessible to student examinees.</li>
+                    <li>Synchronized server countdown timer with automated submission.</li>
+                    <li>Verified IIIT Kota 10-Point Credit Grade allocation (A+, A , B+ ,B, C+, C,
+                        D, F).</li>
+                </ul>
+                <small class="text-muted">Academic Session 2026 • IIIT Kota Department of Computer Science &amp;
+                    Engineering</small>
+            </article>
+
+            <aside class="ui-card hover-lift info-aside">
+                <h4 class="primary-color mb-8">📌 Important Notice for Examinees</h4>
+                <p class="aside-text">
+                    Candidates must sign in with their university Roll Number and Password to unlock live testing
+                    sessions. Unauthenticated visitors are restricted from entering the active exam lobby.
+                </p>
+                <div class="mt-12">
+                    <a href="instructions.html" class="aside-link">Review Complete Exam Guidelines ➔</a>
+                </div>
+            </aside>
+        </section>
+
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                    <li><a href="admin.html">Admin Settings</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Examination Helpdesk</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    IIIT Kota Campus, Ranpur, Kota, Rajasthan 325003<br>
+                    Email: academics@iiitkota.ac.in<br>
+                    Hours: 09:00 AM – 05:00 PM IST
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIIT Kota Online Exam System | Student Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            📝 <strong>CANDIDATE REGISTRATION:</strong> Provide accurate academic credentials. Once enrolled, your Roll
+            Number will serve as your unique examination key.
+        </marquee>
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="instructions.html" class="nav-link">Guidelines</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Select Subject ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exam.html?subject=WT">Web Development (CS201)</a></li>
+                        <li><a href="exam.html?subject=DS">Data Structures &amp; Algorithms (CS202)</a></li>
+                        <li><a href="exam.html?subject=DBMS">Database Systems (CS203) [Locked]</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="results.html" class="nav-link">Scoreboard</a></li>
+                <li class="nav-item" id="navAuthSlot">
+                    <a href="login.html" class="btn-nav btn-nav-accent hover-scale">Portal Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container auth-wrapper">
+
+        <div class="auth-card register-card hover-lift">
+            <div class="auth-header">
+                <h2><big>Candidate Registration</big></h2>
+                <p class="auth-subtitle">Enroll for IIIT Kota B.Tech Semester Examinations</p>
+            </div>
+
+            <form action="../backend/register_process.php" method="POST">
+
+                <div class="form-group">
+                    <label class="form-label" for="reg_name">Full Name</label>
+                    <input type="text" id="reg_name" name="name" class="form-control" placeholder="e.g. Rahul Sharma"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg_roll">University Roll Number</label>
+                    <input type="text" id="reg_roll" name="roll_no" class="form-control" placeholder="e.g. 21CS105"
+                        required>
+                    <small class="form-hint">Unique academic identification number.</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg_email">University Email</label>
+                    <input type="email" id="reg_email" name="email" class="form-control"
+                        placeholder="e.g. rahul@iiitkota.ac.in" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg_branch">Department &amp; Programme</label>
+                    <select id="reg_branch" name="branch" class="form-control" required>
+                        <option value="CSE">B.Tech Computer Science &amp; Engineering</option>
+                        <option value="AI-DS">B.Tech Artificial Intelligence &amp; Data Science</option>
+                        <option value="ECE">B.Tech Electronics &amp; Communication Engineering</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg_password">Create Password</label>
+                    <input type="password" id="reg_password" name="password" class="form-control"
+                        placeholder="Minimum 6 characters" required>
+                    <small class="form-hint">Must contain letters and numbers.</small>
+                </div>
+
+                <button type="submit" class="btn btn-secondary btn-block auth-btn hover-scale">
+                    Register &amp; Create Account ➔
+                </button>
+
+            </form>
+
+            <hr class="custom-hr my-20">
+
+            <p class="auth-switch-text">
+                Already registered? <a href="login.html" class="font-semibold">Login here</a>
+            </p>
+
+        </div>
+
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Examination Helpdesk</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    IIIT Kota Campus, Ranpur, Kota, Rajasthan 325003<br>
+                    Email: academics@iiitkota.ac.in<br>
+                    Hours: 09:00 AM – 05:00 PM IST
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

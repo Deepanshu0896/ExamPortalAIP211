@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIIT Kota ExamPortal | Faculty &amp; Admin Settings</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Marquee Notice -->
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            ⚙️ <strong>FACULTY ADMIN CONSOLE:</strong> Configure examination papers, add dynamic course subjects, insert
+            question bank entries, and manage student access permissions.
+        </marquee>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal <small class="text-muted brand-subtext">[Admin]</small></span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="results.html" class="nav-link">Scorecards</a></li>
+                <li class="nav-item">
+                    <a href="#" id="btnAdminLogout" class="btn-nav btn-danger hover-scale">Admin Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="section-title">
+            <h2><big>Examination Administration &amp; Control Settings</big></h2>
+            <p>Faculty control console to add extra subjects, configure papers, and insert questions with MySQL database
+                persistence.</p>
+        </section>
+
+        <!-- Admin Overview Metrics -->
+        <section class="admin-stats-grid">
+            <div class="stat-card hover-lift">
+                <div class="stat-icon">📚</div>
+                <div>
+                    <div class="stat-number" id="statSubjectCount">3</div>
+                    <div class="stat-label">Registered Subjects</div>
+                </div>
+            </div>
+            <div class="stat-card hover-lift">
+                <div class="stat-icon">📝</div>
+                <div>
+                    <div class="stat-number" id="statQuestionCount">15</div>
+                    <div class="stat-label">Question Bank Items</div>
+                </div>
+            </div>
+            <div class="stat-card hover-lift">
+                <div class="stat-icon">🟢</div>
+                <div>
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Active / Live Papers</div>
+                </div>
+            </div>
+            <div class="stat-card hover-lift">
+                <div class="stat-icon">🔒</div>
+                <div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Locked Papers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forms Grid: Add Subject & Add Question -->
+        <section class="admin-form-grid">
+
+            <!-- Form 1: Add New Subject -->
+            <div class="admin-card hover-lift">
+                <h3 class="card-title">➕ Add New Examination Subject</h3>
+                <p class="text-muted mb-15">Configure a new course subject paper dynamically into the MySQL database.
+                </p>
+
+                <div id="msgSubject" class="hidden"></div>
+                <form id="formAddSubject" action="../backend/admin_manage.php" method="POST">
+                    <input type="hidden" name="action" value="add_subject">
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject_code">Subject / Course Code</label>
+                        <input type="text" id="subject_code" name="subject_code" class="form-control"
+                            placeholder="e.g. CS204 or CS301" required>
+                        <small class="form-hint">Unique academic course code (e.g. CS204 for Computer Networks).</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject_name">Subject Title</label>
+                        <input type="text" id="subject_name" name="subject_name" class="form-control"
+                            placeholder="e.g. Computer Networks" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject_status">Initial Access Status</label>
+                        <select id="subject_status" name="status" class="form-control">
+                            <option value="active">Active (Students can attempt immediately)</option>
+                            <option value="locked" selected>Locked (Sealed paper; restricted to students)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject_num_questions">Number of Questions in Paper</label>
+                        <input type="number" id="subject_num_questions" name="num_questions" class="form-control"
+                            placeholder="e.g. 5" min="1" max="50" value="5">
+                        <small class="form-hint">Questions randomly selected from pool. Marks per question = 10 ÷ No. of questions.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject_desc">Module Description &amp; Scope</label>
+                        <textarea id="subject_desc" name="description" class="form-control"
+                            placeholder="Brief outline of syllabus focus areas..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary btn-block hover-scale">
+                        Register Subject to Database ➔
+                    </button>
+                </form>
+            </div>
+
+            <!-- Form 2: Add Question to Question Bank -->
+            <div class="admin-card hover-lift">
+                <h3 class="card-title">❓ Add Question to Question Bank</h3>
+                <p class="text-muted mb-15">Insert multiple-choice questions linked directly to an enrolled subject
+                    paper.</p>
+
+                <div id="msgQuestion" class="hidden"></div>
+                <form id="formAddQuestion" action="../backend/admin_manage.php" method="POST">
+                    <input type="hidden" name="action" value="add_question">
+
+                    <div class="form-group">
+                        <label class="form-label" for="target_subject">Target Examination Subject</label>
+                        <select id="target_subject" name="subject_code" class="form-control" required>
+                            <option value="WT">CS201 — Web Development</option>
+                            <option value="DS">CS202 — Data Structures &amp; Algorithms</option>
+                            <option value="DBMS">CS203 — Database Management Systems</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="question_text">Question Body</label>
+                        <textarea id="question_text" name="question_text" class="form-control"
+                            placeholder="Enter clear, concise question statement..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="opt_a">Choice A</label>
+                        <input type="text" id="opt_a" name="opt_a" class="form-control" placeholder="Option A text"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="opt_b">Choice B</label>
+                        <input type="text" id="opt_b" name="opt_b" class="form-control" placeholder="Option B text"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="opt_c">Choice C</label>
+                        <input type="text" id="opt_c" name="opt_c" class="form-control" placeholder="Option C text"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="opt_d">Choice D</label>
+                        <input type="text" id="opt_d" name="opt_d" class="form-control" placeholder="Option D text"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="correct_opt">Verified Correct Option Key</label>
+                        <select id="correct_opt" name="correct_opt" class="form-control" required>
+                            <option value="A">Option A</option>
+                            <option value="B">Option B</option>
+                            <option value="C">Option C</option>
+                            <option value="D">Option D</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block hover-scale">
+                        Insert Question into Question Bank ➔
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- Current Configured Subjects Inventory Table -->
+        <section class="ui-card hover-lift mb-30">
+            <h3 class="card-title">📋 Configured Examination Papers Inventory</h3>
+            <p class="text-muted mb-15">Real-time status of all examination subjects. Lock/unlock access or delete custom papers below.</p>
+
+            <div class="table-responsive">
+                <table class="custom-table" id="subjectsInventoryTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Code</th>
+                            <th>Course Title</th>
+                            <th>Qs / Marks</th>
+                            <th>Marks / Q</th>
+                            <th>Access Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsTbody">
+                        <!-- CS201 — Web Development (Always Active) -->
+                        <tr data-base-code="WT">
+                            <td class="text-center"><strong>CS201</strong></td>
+                            <td>Web Development</td>
+                            <td><span id="qs_WT">5 Qs / 10 Marks</span></td>
+                            <td><span id="mpq_WT">2.0 Marks</span></td>
+                            <td><span id="badge_WT" class="badge-status-active">🟢 Active / Live</span></td>
+                            <td class="text-center">
+                                <div class="action-btn-group">
+                                    <button class="btn btn-secondary btn-sm hover-scale" id="btnToggleWT" data-code="WT" data-type="base">🔒 Lock Paper</button>
+                                    <a href="exam.html?subject=WT" class="btn btn-outline btn-sm">Preview</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- CS202 — Data Structures -->
+                        <tr data-base-code="DS">
+                            <td class="text-center"><strong>CS202</strong></td>
+                            <td>Data Structures &amp; Algorithms</td>
+                            <td><span id="qs_DS">5 Qs / 10 Marks</span></td>
+                            <td><span id="mpq_DS">2.0 Marks</span></td>
+                            <td><span id="badge_DS" class="badge-status-active">🟢 Active / Live</span></td>
+                            <td class="text-center">
+                                <div class="action-btn-group">
+                                    <button class="btn btn-secondary btn-sm hover-scale" id="btnToggleDS" data-code="DS" data-type="base">🔒 Lock Paper</button>
+                                    <a href="exam.html?subject=DS" class="btn btn-outline btn-sm">Preview</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- CS203 — DBMS (Locked by default) -->
+                        <tr>
+                            <td class="text-center"><strong>CS203</strong></td>
+                            <td>Database Management Systems</td>
+                            <td><span id="qs_DBMS">5 Qs / 10 Marks</span></td>
+                            <td><span id="mpq_DBMS">2.0 Marks</span></td>
+                            <td><span id="badge_DBMS" class="badge-status-locked">🔒 Locked (Sealed)</span></td>
+                            <td class="text-center">
+                                <div class="action-btn-group">
+                                    <form id="formToggleDBMS" action="../backend/admin_manage.php" method="POST" class="form-inline">
+                                        <input type="hidden" name="action" value="toggle_status">
+                                        <input type="hidden" name="subject_code" value="DBMS">
+                                        <button type="submit" id="btnToggleDBMS" class="btn btn-secondary btn-sm hover-scale">🔓 Unlock Paper</button>
+                                    </form>
+                                    <a href="exam.html?subject=DBMS" class="btn btn-outline btn-sm">Preview</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Extra custom subjects injected here by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Dynamic Subject Registry (extra container, now unused for rows — rows go into tbody above) -->
+        <div id="extraSubjectsContainer"></div>
+
+        <!-- Question Bank Viewer -->
+        <section class="ui-card hover-lift mb-30">
+            <h3 class="card-title">🗂️ Question Bank Viewer</h3>
+            <p class="text-muted mb-15">Review all configured questions per subject. No candidate login required.</p>
+
+            <!-- Subject filter tabs -->
+            <div class="admin-tab-bar">
+                <button class="btn btn-outline btn-sm admin-tab-btn active-tab" data-filter="WT">CS201 — Web Dev</button>
+                <button class="btn btn-outline btn-sm admin-tab-btn" data-filter="DS">CS202 — DSA</button>
+                <button class="btn btn-outline btn-sm admin-tab-btn" data-filter="DBMS">CS203 — DBMS</button>
+                <button class="btn btn-outline btn-sm admin-tab-btn" data-filter="ALL">All Subjects</button>
+            </div>
+
+            <div id="qbankList" class="qbank-list">
+                <!-- Rendered by main.js -->
+                <p class="text-muted">Loading question bank...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Admin Control</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    Authenticated Faculty: Prof. Dr. Mehta (CSE Dept)<br>
+                    Session: Active
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

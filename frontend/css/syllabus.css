@@ -1,0 +1,165 @@
+/* ==========================================================================
+   IIIT KOTA - SYLLABUS STYLESHEET (syllabus.css)
+   Pure external CSS for IIIT Kota B.Tech CSE Syllabus Document
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ffffff;
+    color: #1e293b;
+    padding: 24px;
+    line-height: 1.6;
+}
+
+.syllabus-header {
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+}
+
+.institute-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+}
+
+.department-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f766e;
+    margin-top: 2px;
+}
+
+.curriculum-meta {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.course-meta-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 18px;
+    font-size: 0.88rem;
+}
+
+.course-meta-bar span {
+    color: #334155;
+}
+
+.course-meta-bar strong {
+    color: #1e3a8a;
+}
+
+.section-heading {
+    color: #1e3a8a;
+    font-size: 1.15rem;
+    margin: 24px 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #3b82f6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 22px;
+    font-size: 0.9rem;
+}
+
+th, td {
+    border: 1px solid #cbd5e1;
+    padding: 11px 14px;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: #1e3a8a;
+    font-weight: 700;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.unit-col {
+    font-weight: 700;
+    color: #1e3a8a;
+    width: 90px;
+    vertical-align: top;
+}
+
+.topic-title {
+    font-weight: 700;
+    color: #0f172a;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.textbook-box {
+    background-color: #f8fafc;
+    border-left: 3px solid #0f766e;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+    color: #334155;
+    margin-bottom: 20px;
+}
+
+.textbook-box strong {
+    color: #0f766e;
+}
+
+.grading-table th, .grading-table td {
+    text-align: center;
+    padding: 9px 12px;
+}
+
+.grade-badge-top {
+    background-color: #fef3c7;
+    color: #92400e;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.grade-badge-pass {
+    background-color: #dcfce7;
+    color: #166534;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.grade-badge-fail {
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.policy-card {
+    background-color: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.86rem;
+    color: #1e40af;
+    line-height: 1.5;
+    margin-top: 15px;
+}
+

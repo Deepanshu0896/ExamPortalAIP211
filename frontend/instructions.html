@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System | Instructions & Guidelines</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Notice Banner -->
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            ⚠️ <strong>CRITICAL CANDIDATE NOTICE:</strong> Review all examination guidelines thoroughly before starting.
+            Do not refresh or switch tabs during active assessment sessions.
+        </marquee>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="instructions.html" class="nav-link active">Guidelines</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Select Subject ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exam.html?subject=WT">Web Development (CS201)</a></li>
+                        <li><a href="exam.html?subject=DS">Data Structures &amp; Algorithms (CS202)</a></li>
+                        <li><a href="exam.html?subject=DBMS">Database Systems (CS203)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="results.html" class="nav-link">Scoreboard</a></li>
+                <li class="nav-item" id="navAuthSlot">
+                    <a href="login.html" class="btn-nav btn-nav-accent hover-scale">Portal Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="section-title">
+            <h2><big>Official Examination Guidelines &amp; Candidate SOP</big></h2>
+            <p>Candidate Standard Operating Procedure, Marking Scheme, Navigation Walkthrough, and IIIT Kota B.Tech Curriculum Matrix.</p>
+        </section>
+
+        <!-- Main Guidelines Article -->
+        <article class="ui-card hover-lift mb-30">
+
+            <!-- 1. Extended Standard Operating Procedure -->
+            <h3 class="card-title">1. Extended Standard Operating Procedure (SOP)</h3>
+            <p>All examinees must strictly comply with the following institutional procedures across all phases of the evaluation:</p>
+
+            <h4 class="primary-color mt-15 mb-8">A. Pre-Examination Setup &amp; Authentication</h4>
+            <ol class="content-list">
+                <li><strong>Mandatory Authentication:</strong> Under IIIT Kota Option 2 Protected Mode, examinees must sign in with their authorized student Roll Number (e.g., <code>21CS101</code>) and password prior to launching an examination session.</li>
+                <li><strong>Hardware &amp; Network Readiness:</strong> Ensure a stable computer setup and reliable broadband connection. System requirements are detailed below:</li>
+            </ol>
+
+            <pre class="code-block">
+IIIT Kota Evaluation Cell — Candidate System Pre-Check Checklist:
+- Supported Browsers: Google Chrome (v90+), Mozilla Firefox (v88+), Microsoft Edge (v90+)
+- Screen Resolution: Recommended 1280x720 or higher
+- JavaScript Engine: Enabled (ECMAScript 6+ standard required for timer and DOM interaction)
+- Network Stability: Continuous ping to academic server required for live session timing
+            </pre>
+
+            <h4 class="primary-color mt-20 mb-8">B. In-Examination Conduct &amp; Proctoring Rules</h4>
+            <ol class="content-list" start="3">
+                <li><strong>Session Timing &amp; Countdown:</strong> The examination duration is strictly <strong>10 minutes (600 seconds)</strong>. A sticky timer bar continuously displays remaining time. A pulse warning triggers when less than <code>02:00</code> minutes remain.</li>
+                <li><strong>Paper Lock Safeguard:</strong> Upcoming or sealed papers (such as CS203: Database Management Systems) are locked by the faculty administrator and cannot be accessed or attempted by students.</li>
+                <li><strong>Window Focus &amp; Integrity:</strong> Candidates must remain in the active browser tab. Navigating away or minimizing the examination window is strictly prohibited.</li>
+            </ol>
+
+            <h4 class="primary-color mt-20 mb-8">C. Post-Examination &amp; Submission Protocol</h4>
+            <ol class="content-list" start="6">
+                <li><strong>Manual Submission:</strong> Clicking "Finalize &amp; Submit Exam" triggers a confirmation modal dialogue requiring examinee verification before final transmission.</li>
+                <li><strong>Automatic Submission:</strong> Upon conclusion of the countdown timer (T<sub>0</sub> = 00:00), the system automatically compiles and submits all currently selected responses.</li>
+                <li><strong>Scorecard Archival:</strong> Upon submission, responses are evaluated against the official answer key and recorded permanently in the university database.</li>
+            </ol>
+
+            <hr class="custom-hr my-25">
+
+            <!-- 2. Marking Scheme & 10-Point Grading Scale -->
+            <h3 class="card-title">2. Comprehensive Marking Scheme &amp; 10-Point Grading Scale</h3>
+            <p>Evaluations strictly follow the grading ordinance of Indian Institute of Information Technology Kota (IIIT Kota):</p>
+
+            <div class="guideline-highlight mt-15">
+                <p><strong>Evaluation Structure per Module:</strong></p>
+                <div class="formula-box">
+                    Total Questions: 5 MCQs &nbsp;|&nbsp; Correct Answer: <strong>+2.0 Marks</strong> &nbsp;|&nbsp; Incorrect / Unanswered: <strong>0.0 Marks</strong> (No Negative Marking) &nbsp;|&nbsp; Maximum Marks: <strong>10.0</strong>
+                </div>
+
+                <p class="mt-15"><strong>Academic Equivalence &amp; SGPA Formula:</strong></p>
+                <div class="formula-box">
+                    Percentage Marks = CGPA &times; 10 &nbsp;|&nbsp; SGPA = &sum;(C<sub>i</sub> &times; G<sub>i</sub>) &divide; &sum;C<sub>i</sub> (where C<sub>i</sub> = Course Credits, G<sub>i</sub> = Grade Points in Cohort K<sup>th</sup>)
+                </div>
+            </div>
+
+            <div class="table-responsive mt-20">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Letter Grade</th>
+                            <th class="text-center">Grade Point</th>
+                            <th>Percentage Range</th>
+                            <th>Academic Standing</th>
+                            <th class="text-center">Evaluation Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center font-bold">A<sup>+</sup></td>
+                            <td class="text-center">10</td>
+                            <td>90% – 100%</td>
+                            <td>Outstanding Performance</td>
+                            <td class="text-center"><span class="badge-grade-top">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">A</td>
+                            <td class="text-center">9</td>
+                            <td>80% – 89%</td>
+                            <td>Excellent Performance</td>
+                            <td class="text-center"><span class="badge-grade-top">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">B<sup>+</sup></td>
+                            <td class="text-center">8</td>
+                            <td>70% – 79%</td>
+                            <td>Very Good Performance</td>
+                            <td class="text-center"><span class="badge-grade-pass">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">B</td>
+                            <td class="text-center">7</td>
+                            <td>60% – 69%</td>
+                            <td>Good Performance</td>
+                            <td class="text-center"><span class="badge-grade-pass">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">C<sup>+</sup></td>
+                            <td class="text-center">6</td>
+                            <td>50% – 59%</td>
+                            <td>Average Performance</td>
+                            <td class="text-center"><span class="badge-grade-pass">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">C</td>
+                            <td class="text-center">5</td>
+                            <td>40% – 49%</td>
+                            <td>Below Average Performance</td>
+                            <td class="text-center"><span class="badge-grade-pass">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold">D</td>
+                            <td class="text-center">4</td>
+                            <td>35% – 39%</td>
+                            <td>Marginal Pass (Minimum Qualifying Cutoff)</td>
+                            <td class="text-center"><span class="badge-grade-pass">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center font-bold text-danger">F</td>
+                            <td class="text-center">0</td>
+                            <td>&lt; 35%</td>
+                            <td>Unsuccessful Attempt (Re-examination Mandatory)</td>
+                            <td class="text-center"><span class="badge-grade-fail">Fail</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="custom-hr my-25">
+
+            <!-- 3. Portal Navigation & Test Walkthrough -->
+            <h3 class="card-title">3. Portal Navigation &amp; Candidate Walkthrough</h3>
+            <p>Follow these sequential steps to navigate through the examination lifecycle smoothly:</p>
+
+            <ol class="content-list mt-15">
+                <li><strong>Step 1 — Authentication:</strong> Visit the <a href="login.html" class="link-primary">Portal Login</a> page. Enter your university Roll Number (e.g. <code>21CS101</code>) and password.</li>
+                <li><strong>Step 2 — Selecting an Active Paper:</strong> From the top navigation dropdown (<em>Select Subject ▾</em>) or the Home dashboard, choose your scheduled module: <strong>Web Development (CS201)</strong> or <strong>Data Structures &amp; Algorithms (CS202)</strong>.</li>
+                <li><strong>Step 3 — Attempting Questions:</strong> Read each question and select your preferred answer option. The active card automatically illuminates with an <code>.option-selected</code> border for clear visual feedback.</li>
+                <li><strong>Step 4 — Monitoring Time:</strong> Glance at the sticky timer bar at the top of the viewport to manage your pace during the 10-minute test duration.</li>
+                <li><strong>Step 5 — Submission &amp; Confirmation:</strong> Click the "Submit Test" button. Confirm your intent in the modal popup dialog box.</li>
+                <li><strong>Step 6 — Transcript &amp; Scorecard:</strong> Navigate to the <a href="results.html" class="link-primary">Scoreboard</a> page and search with your Roll Number to inspect your verified marksheet, grade point, and SGPA.</li>
+            </ol>
+
+            <h4 class="primary-color mt-20 mb-8">Examination Integrity &amp; Institutional Policies</h4>
+            <dl class="def-list">
+                <dt>Single-Attempt Session Policy</dt>
+                <dd>Each registered examinee is allocated one official evaluated submission per scheduled course module.</dd>
+
+                <dt>Institutional Transcript Auditing</dt>
+                <dd>All evaluated scores and grade point averages are permanently recorded in the central database under supervision of the IIIT Kota Autonomous Examination Cell.</dd>
+
+                <dt>Academic Honesty &amp; Proctored Integrity</dt>
+                <dd>Attempts to tamper with client scripts, spoof credentials, or access locked papers are recorded and escalated to the Academic Disciplinary Committee.</dd>
+            </dl>
+
+        </article>
+
+        <!-- 4. Embedded Syllabus Section -->
+        <section class="ui-card hover-lift mb-30">
+            <div class="section-header-flex">
+                <div>
+                    <h3 class="card-title">4. Official Course Curriculum &amp; Syllabus Matrix</h3>
+                    <p class="text-muted">Review IIIT Kota curriculum topics, learning units, and course reference modules below.</p>
+                </div>
+            </div>
+
+            <div class="iframe-wrapper">
+                <iframe src="syllabus.html" title="Official Examination Syllabus" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <!-- Action Button -->
+        <div class="action-center">
+            <a id="instructionProceedBtn" href="exam.html" class="btn btn-primary btn-lg hover-scale">
+                I Agree to Instructions — Proceed to Exam ➔
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Examination Helpdesk</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    IIIT Kota Campus, Ranpur, Kota, Rajasthan 325003<br>
+                    Email: academics@iiitkota.ac.in<br>
+                    Hours: 09:00 AM – 05:00 PM IST
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

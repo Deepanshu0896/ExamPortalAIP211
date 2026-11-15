@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System | Examination Scoreboard &amp; Marksheet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Marquee Notice -->
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            🏆 <strong>IIIT KOTA SCOREBOARD:</strong> Semester examination results compiled according to the 10-point
+            credit grading scale. Search by Roll Number below.
+        </marquee>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="instructions.html" class="nav-link">Guidelines</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Select Subject ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exam.html?subject=WT">Web Development (CS201)</a></li>
+                        <li><a href="exam.html?subject=DS">Data Structures &amp; Algorithms (CS202)</a></li>
+                        <li><a href="exam.html?subject=DBMS">Database Systems (CS203) [Locked]</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="results.html" class="nav-link active">Scoreboard</a></li>
+                <li class="nav-item" id="navAuthSlot">
+                    <a href="login.html" class="btn-nav btn-nav-accent hover-scale">Portal Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="section-title">
+            <h2><big>IIIT Kota Academic Scoreboard</big></h2>
+            <p>Official verified candidate transcripts and marksheet records calculated on the 10-point credit-based
+                scale.</p>
+        </section>
+
+        <!-- LOGIN REQUIRED RESTRICTION NOTICE (Displayed if unauthenticated) -->
+        <section id="loginRequiredNotice" class="locked-paper-box animate-fade-in hidden">
+            <div class="locked-icon">🔐</div>
+            <h2 class="locked-title">Candidate Authentication Required</h2>
+            <p class="locked-desc">
+                Access to official examination scorecards, semester marksheet records, and SGPA evaluations is strictly
+                restricted to authenticated students and faculty under IIIT Kota Examination Ordinances.<br>
+                Please authenticate with your registered student Roll Number and Password to access your verified marksheet.
+            </p>
+            <div class="hero-actions">
+                <a id="btnAuthLoginResults" href="login.html?next=results" class="btn btn-primary hover-scale">Portal Login to View Scoreboard ➔</a>
+                <a href="index.html" class="btn btn-secondary hover-scale">Return to Portal Home</a>
+            </div>
+        </section>
+
+        <!-- PROTECTED SCOREBOARD CONTENT (Hidden until candidate authentication) -->
+        <div id="protectedScoreboardContent" class="hidden">
+
+            <!-- Search / Filter Form -->
+            <section class="search-container hover-lift">
+            <h3 class="search-title" id="scorecardSearchTitle">
+                🔍 Candidate Scorecard &amp; Transcript Verification
+            </h3>
+
+            <!-- Student View Notice (Shown only for logged-in students) -->
+            <div id="studentScorecardBanner" class="alert-info hidden">
+                🎓 <strong>Authenticated Student:</strong> <span id="studentBannerName"></span> (<span id="studentBannerRoll"></span>) &mdash; Viewing official confidential semester transcript.
+            </div>
+
+            <form id="scorecardSearchForm" action="results.html" method="GET" class="search-form">
+
+                <!-- Admin Quick Select (Shown only for Admin) -->
+                <div class="form-col-flex hidden" id="adminCandidateSelectCol">
+                    <label class="form-label" for="select_candidate">Quick Select Candidate:</label>
+                    <select id="select_candidate" class="form-control">
+                        <option value="ALL">All Enrolled Candidates (Overview)</option>
+                        <option value="21CS101">21CS101 — Rahul Sharma (B.Tech CSE)</option>
+                        <option value="21CS102">21CS102 — Priya Patel (B.Tech CSE)</option>
+                    </select>
+                </div>
+
+                <div class="form-col-flex" id="searchRollCol">
+                    <label class="form-label" for="filter_roll" id="filterRollLabel">Filter by Roll Number:</label>
+                    <input type="text" id="filter_roll" name="roll_no" class="form-control" placeholder="Enter Roll Number (e.g. 21CS101)">
+                </div>
+
+                <div class="form-col-flex-sm">
+                    <label class="form-label" for="filter_subject">Module Subject:</label>
+                    <select id="filter_subject" name="subject" class="form-control">
+                        <option value="ALL">All Enrolled Courses</option>
+                        <option value="WT">Web Development (CS201)</option>
+                        <option value="DS">Data Structures &amp; Algorithms (CS202)</option>
+                        <option value="DBMS">Database Systems (CS203)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit" id="btnSearchRecords" class="btn btn-primary btn-search hover-scale">
+                        Search Records ➔
+                    </button>
+                </div>
+
+            </form>
+            <small class="form-hint mt-10" id="scorecardSearchHint">
+                * Enter candidate Roll Number to retrieve verified semester marksheet and SGPA calculation.
+            </small>
+        </section>
+
+        <!-- Initial State: Prompt to Search (Displayed when no search is performed) -->
+        <section id="initialSearchNotice" class="ui-card text-center py-40 animate-fade-in">
+            <div class="card-icon">🔍</div>
+            <h3>Candidate Scorecard &amp; Transcript Search</h3>
+            <p class="text-muted">
+                Please enter a student Roll Number above (e.g., <code>21CS101</code> or <code>21CS102</code>) and click <strong>Search Records</strong> to display the official marksheet.
+            </p>
+        </section>
+
+        <!-- No Records Found State -->
+        <section id="noRecordNotice" class="ui-card text-center py-40 animate-fade-in hidden">
+            <div class="card-icon">⚠️</div>
+            <h3>No Academic Record Found</h3>
+            <p class="text-muted">
+                No examination marksheet was found matching Roll Number: <strong id="searchedRollText"></strong>.<br>
+                Please verify the Roll Number or complete an examination session first.
+            </p>
+            <div class="mt-20">
+                <a href="exam.html?subject=WT" class="btn btn-primary hover-scale">Attempt Examination Now</a>
+            </div>
+        </section>
+
+        <!-- Semester Marksheet Table (Hidden until searched) -->
+        <section id="marksheetSection" class="ui-card hover-lift hidden">
+            <div class="table-header-flex">
+                <h3 class="card-title">Official Semester Marksheet Table (IIIT Kota Ordinance)</h3>
+                <span class="badge-verified">
+                    10-Point Credit Scale Verified
+                </span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center">Roll No</th>
+                            <th rowspan="2">Student Name</th>
+                            <th colspan="2" class="th-subgroup">Assessment Modules</th>
+                            <th rowspan="2" class="text-center">Max Marks</th>
+                            <th rowspan="2" class="text-center">Scored</th>
+                            <th rowspan="2" class="text-center">Grade (Points)</th>
+                        </tr>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Title</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scorecardTableBody">
+
+                        <!-- ════════════════════════════════════════════════════════
+                             Student 1: Rahul Sharma (21CS101) — High Achiever
+                             Score: WT=10, DS=8, DBMS=9 → Total 27/30 → SGPA 9.67
+                        ═════════════════════════════════════════════════════════ -->
+                        <tr class="student-record" data-roll="21CS101">
+                            <td rowspan="3" class="td-student-roll">21CS101</td>
+                            <td rowspan="3" class="td-student-name">
+                                Rahul Sharma<br>
+                                <small class="td-student-sub">B.Tech CSE - IIIT Kota</small>
+                            </td>
+                            <td>CS201</td>
+                            <td>Web Development</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good">10</td>
+                            <td class="text-center"><span class="badge-grade-top">Grade A+ (10 Pts)</span></td>
+                        </tr>
+                        <tr class="student-record" data-roll="21CS101">
+                            <td>CS202</td>
+                            <td>Data Structures &amp; Algorithms</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good">8</td>
+                            <td class="text-center"><span class="badge-grade-top">Grade A (9 Pts)</span></td>
+                        </tr>
+                        <tr class="student-record" data-roll="21CS101">
+                            <td>CS203</td>
+                            <td>Database Management Systems</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good">9</td>
+                            <td class="text-center"><span class="badge-grade-top">Grade A+ (10 Pts)</span></td>
+                        </tr>
+                        <tr class="total-row student-record" data-roll="21CS101">
+                            <td colspan="4" class="total-label">Aggregated Performance for 21CS101:</td>
+                            <td class="text-center">30</td>
+                            <td class="score-primary">27</td>
+                            <td class="text-center"><span class="badge-grade-top">SGPA: 9.67 (90.0%)</span></td>
+                        </tr>
+
+                        <!-- ════════════════════════════════════════════════════════
+                             Student 2: Priya Patel (21CS102) — Good Performer
+                             Score: WT=8, DS=7, DBMS=6 → Total 21/30 → SGPA 8.0
+                        ═════════════════════════════════════════════════════════ -->
+                        <tr class="student-record" data-roll="21CS102">
+                            <td rowspan="3" class="td-student-roll">21CS102</td>
+                            <td rowspan="3" class="td-student-name">
+                                Priya Patel<br>
+                                <small class="td-student-sub">B.Tech CSE - IIIT Kota</small>
+                            </td>
+                            <td>CS201</td>
+                            <td>Web Development</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good">8</td>
+                            <td class="text-center"><span class="badge-grade-pass">Grade A (9 Pts)</span></td>
+                        </tr>
+                        <tr class="student-record" data-roll="21CS102">
+                            <td>CS202</td>
+                            <td>Data Structures &amp; Algorithms</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good">7</td>
+                            <td class="text-center"><span class="badge-grade-pass">Grade B+ (8 Pts)</span></td>
+                        </tr>
+                        <tr class="student-record" data-roll="21CS102">
+                            <td>CS203</td>
+                            <td>Database Management Systems</td>
+                            <td class="text-center">10</td>
+                            <td class="score-mid">6</td>
+                            <td class="text-center"><span class="badge-grade-pass">Grade B (7 Pts)</span></td>
+                        </tr>
+                        <tr class="total-row student-record" data-roll="21CS102">
+                            <td colspan="4" class="total-label">Aggregated Performance for 21CS102:</td>
+                            <td class="text-center">30</td>
+                            <td class="score-primary">21</td>
+                            <td class="text-center"><span class="badge-grade-pass">SGPA: 8.0 (70.0%)</span></td>
+                        </tr>
+
+                        <!-- Dynamic Recent Submission Row Slot (populated by JS after exam) -->
+                        <tr id="dynamicStudentRow" class="student-record hidden" data-roll="">
+                            <td class="td-student-roll" id="dynRoll"></td>
+                            <td class="td-student-name" id="dynName"></td>
+                            <td id="dynCourseCode">CS201</td>
+                            <td id="dynCourseTitle">Web Development</td>
+                            <td class="text-center">10</td>
+                            <td class="score-good" id="dynScore"></td>
+                            <td class="text-center" id="dynGrade"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- IIIT Kota Academic Grading Criteria -->
+            <aside class="grade-criteria-box">
+                <p class="grade-criteria-text">
+                    <strong>IIIT Kota 10-Point Credit-Based Grading Scale:</strong>
+                    Grade A+ (10 Pts, &ge;90%), Grade A (9 Pts, 80&ndash;89%), Grade B+ (8 Pts, 70&ndash;79%), Grade B
+                    (7 Pts, 60&ndash;69%), Grade C+ (6 Pts, 50&ndash;59%), Grade C (5 Pts, 40&ndash;49%), Grade D (4
+                    Pts, 35&ndash;39% Minimum Qualifying Pass), Grade F (0 Pts, &lt;35% Fail).
+                    <br>
+                    <strong>Equivalent Percentage Formula:</strong> Percentage Marks = CGPA &times; 10.
+                </p>
+            </aside>
+
+        </section>
+
+        <hr class="custom-hr">
+
+            <div class="action-center">
+                <a href="exam.html?subject=WT" class="btn btn-secondary mr-15 hover-scale">Attempt Live Exam</a>
+                <a href="index.html" class="btn btn-outline hover-scale">Return to Home Portal</a>
+            </div>
+
+        </div><!-- /#protectedScoreboardContent -->
+
+    </main>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Examination Helpdesk</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    IIIT Kota Campus, Ranpur, Kota, Rajasthan 325003<br>
+                    Email: academics@iiitkota.ac.in<br>
+                    Hours: 09:00 AM – 05:00 PM IST
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

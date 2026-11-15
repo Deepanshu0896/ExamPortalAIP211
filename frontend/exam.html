@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam System | Active Test Session</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- Notice Banner -->
+    <div class="notice-marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();"
+            onmouseout="this.start();">
+            ⏳ <strong>IIIT KOTA PROCTORED TEST SESSION:</strong> Timer is active. Automatic submission executes when
+            countdown concludes. Ensure all questions are answered!
+        </marquee>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                <span class="logo-icon">🎓</span>
+                <span>ExamPortal</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="instructions.html" class="nav-link">Guidelines</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Select Subject ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exam.html?subject=WT">Web Development (CS201)</a></li>
+                        <li><a href="exam.html?subject=DS">Data Structures &amp; Algorithms (CS202)</a></li>
+                        <li><a href="exam.html?subject=DBMS">Database Systems (CS203) [Locked]</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="results.html" class="nav-link">Scoreboard</a></li>
+                <li class="nav-item" id="navAuthSlot">
+                    <a href="login.html" class="btn-nav btn-nav-accent hover-scale">Portal Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sticky Timer Bar -->
+    <aside id="timerBar" class="sticky-timer-bar">
+        <div>
+            <strong>Candidate:</strong> <span id="candidateDisplay">21CS101 (Rahul Sharma)</span>
+        </div>
+        <div class="timer-display pulse-warning">
+            ⏱️ Time Remaining: <span id="timerText">10:00</span>
+        </div>
+    </aside>
+
+    <main class="container">
+
+        <!-- AUTHENTICATION REQUIRED NOTICE (Option 2: Protected Mode) -->
+        <section id="loginRequiredNotice" class="locked-paper-box animate-fade-in hidden">
+            <div class="locked-icon">🔐</div>
+            <h2 class="locked-title">Candidate Authentication Required</h2>
+            <p class="locked-desc">
+                Access to live examination sessions is strictly restricted to authenticated candidates under IIIT Kota
+                Examination Ordinances.<br>
+                Please authenticate with your registered student Roll Number and Password to access your test paper and
+                begin timed evaluation.
+            </p>
+            <div class="hero-actions">
+                <a id="btnAuthLogin" href="login.html" class="btn btn-primary hover-scale">Login to Attempt Exam ➔</a>
+                <a href="index.html" class="btn btn-secondary hover-scale">Return to Portal Home</a>
+            </div>
+        </section>
+
+        <!-- LOCKED PAPER RESTRICTION NOTICE (Displayed if paper is locked) -->
+        <section id="lockedPaperNotice" class="locked-paper-box animate-fade-in hidden">
+            <div class="locked-icon">🔒</div>
+            <h2 class="locked-title">Examination Paper Locked</h2>
+            <p class="locked-desc">
+                <strong id="lockedSubjectTitle">CS203: Database Management Systems</strong> is currently
+                <strong>locked and sealed</strong>.<br>
+                Students are strictly restricted from accessing this examination paper until officially scheduled
+                and unlocked by the faculty administrator.
+            </p>
+            <div class="hero-actions">
+                <a href="index.html" class="btn btn-primary hover-scale">Return to Exam Portal</a>
+                <a href="instructions.html" class="btn btn-secondary hover-scale">Review Guidelines</a>
+            </div>
+        </section>
+
+        <!-- ACTIVE EXAMINATION FORM -->
+        <form id="examForm" action="../backend/submit_exam.php" method="POST">
+
+            <input type="hidden" id="formSubject" name="subject" value="Web Development">
+            <input type="hidden" id="formSubjectCode" name="subject_code" value="WT">
+            <input type="hidden" id="formRollNo" name="roll_no" value="21CS101">
+
+            <!-- ========================================================
+                 SUBJECT 1: WEB DEVELOPMENT (CS201) QUESTIONS
+                 ======================================================== -->
+            <div id="sectionWebDev">
+
+                <!-- Q1: HTML Semantic Tags -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1 of 5 (Web Development)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which of the following is considered an HTML5 <strong>Semantic Tag</strong> that clearly
+                        describes its structural meaning to both browser and search engine?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q1_a" name="q1" value="A" required>
+                        <label for="wt_q1_a">A) &lt;div&gt;</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q1_b" name="q1" value="B">
+                        <label for="wt_q1_b">B) &lt;article&gt;</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q1_c" name="q1" value="C">
+                        <label for="wt_q1_c">C) &lt;span&gt;</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q1_d" name="q1" value="D">
+                        <label for="wt_q1_d">D) &lt;font&gt;</label>
+                    </div>
+                </article>
+
+                <!-- Q2: Subscript & Superscript Formatting Tags -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2 of 5 (Web Development)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In HTML5 markup, which pair of tags is correctly applied to render chemical formulas such as
+                        H<sub>2</sub>O and algebraic polynomial powers such as (a + b)<sup>2</sup>?
+                    </p>
+                    <p class="question-hint">
+                        Technical Reference: Subscripts position characters slightly below the normal line, while
+                        superscripts position characters above.
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q2_a" name="q2" value="A" required>
+                        <label for="wt_q2_a">A) H&lt;sub&gt;2&lt;/sub&gt;O and (a+b)&lt;sup&gt;2&lt;/sup&gt;</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q2_b" name="q2" value="B">
+                        <label for="wt_q2_b">B) H&lt;sup&gt;2&lt;/sup&gt;O and (a+b)&lt;sub&gt;2&lt;/sub&gt;</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q2_c" name="q2" value="C">
+                        <label for="wt_q2_c">C) H2O and (a+b)^2 using unformatted plain text</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q2_d" name="q2" value="D">
+                        <label for="wt_q2_d">D) H&lt;big&gt;2&lt;/big&gt;O and
+                            (a+b)&lt;small&gt;2&lt;/small&gt;</label>
+                    </div>
+                </article>
+
+                <!-- Q3: Code Analysis using <pre> -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3 of 5 (Web Development)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Analyze the following CSS snippet inside the preformatted code block. What visual effect does
+                        this property create on an HTML element?
+                    </p>
+                    <pre class="code-block">
+.exam-badge {
+    transform: rotateY(180deg);
+    perspective: 1000px;
+    transition: transform 0.6s ease;
+}
+                    </pre>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q3_a" name="q3" value="A" required>
+                        <label for="wt_q3_a">A) 2D vertical translation along Y-axis</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q3_b" name="q3" value="B">
+                        <label for="wt_q3_b">B) 3D horizontal flip rotation along the Y-axis</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q3_c" name="q3" value="C">
+                        <label for="wt_q3_c">C) Scales element size by 180 percent</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q3_d" name="q3" value="D">
+                        <label for="wt_q3_d">D) Changes display property to inline-block</label>
+                    </div>
+                </article>
+
+                <!-- Q4: HTML Tables & Rowspan -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4 of 5 (Web Development)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which HTML attribute is used within a <code>&lt;td&gt;</code> or <code>&lt;th&gt;</code>
+                        element to merge two or more adjacent cells vertically across rows?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q4_a" name="q4" value="A" required>
+                        <label for="wt_q4_a">A) colspan</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q4_b" name="q4" value="B">
+                        <label for="wt_q4_b">B) rowspan</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q4_c" name="q4" value="C">
+                        <label for="wt_q4_c">C) cellmerge</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q4_d" name="q4" value="D">
+                        <label for="wt_q4_d">D) vspan</label>
+                    </div>
+                </article>
+
+                <!-- Q5: Stacking Context & z-index -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 5 of 5 (Web Development)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        For the CSS property <code>z-index: 999</code> to properly affect an element's stacking
+                        order, which condition MUST be satisfied?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q5_a" name="q5" value="A" required>
+                        <label for="wt_q5_a">A) The element must have a defined <code>position</code> (relative,
+                            absolute, fixed, or sticky)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q5_b" name="q5" value="B">
+                        <label for="wt_q5_b">B) The element must be a table cell with <code>colspan</code></label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q5_c" name="q5" value="C">
+                        <label for="wt_q5_c">C) The element must contain a <code>&lt;marquee&gt;</code> tag</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="wt_q5_d" name="q5" value="D">
+                        <label for="wt_q5_d">D) The element's opacity must be set to 0.5</label>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ========================================================
+                 SUBJECT 2: DATA STRUCTURES & ALGORITHMS (CS202) QUESTIONS
+                 ======================================================== -->
+            <div id="sectionDSA" class="hidden">
+
+                <!-- DSA Q1: Quick Sort Time Complexity -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1 of 5 (Data Structures &amp; Algorithms)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        What is the worst-case time complexity of the standard <strong>Quick Sort</strong> algorithm
+                        when the chosen pivot is repeatedly the smallest or largest element?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q1_a" name="ds_q1" value="A">
+                        <label for="ds_q1_a">A) O(N log N)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q1_b" name="ds_q1" value="B">
+                        <label for="ds_q1_b">B) O(N<sup>2</sup>)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q1_c" name="ds_q1" value="C">
+                        <label for="ds_q1_c">C) O(N)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q1_d" name="ds_q1" value="D">
+                        <label for="ds_q1_d">D) O(log N)</label>
+                    </div>
+                </article>
+
+                <!-- DSA Q2: LIFO Stack Operations -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2 of 5 (Data Structures &amp; Algorithms)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which linear data structure strictly enforces the <strong>Last-In-First-Out (LIFO)</strong>
+                        principle and is directly utilized by compilers for recursion and function call stack
+                        management?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q2_a" name="ds_q2" value="A">
+                        <label for="ds_q2_a">A) Queue</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q2_b" name="ds_q2" value="B">
+                        <label for="ds_q2_b">B) Stack</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q2_c" name="ds_q2" value="C">
+                        <label for="ds_q2_c">C) Singly Linked List</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q2_d" name="ds_q2" value="D">
+                        <label for="ds_q2_d">D) Hash Table</label>
+                    </div>
+                </article>
+
+                <!-- DSA Q3: BST In-Order Property -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3 of 5 (Data Structures &amp; Algorithms)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In a valid <strong>Binary Search Tree (BST)</strong>, what mathematical property MUST all
+                        keys stored in the left subtree of any given node $X$ satisfy?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q3_a" name="ds_q3" value="A">
+                        <label for="ds_q3_a">A) All left keys must be strictly greater than $X$</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q3_b" name="ds_q3" value="B">
+                        <label for="ds_q3_b">B) All left keys must be strictly less than $X$</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q3_c" name="ds_q3" value="C">
+                        <label for="ds_q3_c">C) All left keys must equal $2 \times X$</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q3_d" name="ds_q3" value="D">
+                        <label for="ds_q3_d">D) There is no structural ordering constraint</label>
+                    </div>
+                </article>
+
+                <!-- DSA Q4: Doubly Linked List Pointers -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4 of 5 (Data Structures &amp; Algorithms)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In memory representation, what is the minimum number of pointer fields required inside a
+                        standard node of a <strong>Doubly Linked List</strong>?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q4_a" name="ds_q4" value="A">
+                        <label for="ds_q4_a">A) 1 pointer (next only)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q4_b" name="ds_q4" value="B">
+                        <label for="ds_q4_b">B) 2 pointers (previous and next)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q4_c" name="ds_q4" value="C">
+                        <label for="ds_q4_c">C) 3 pointers (prev, next, parent)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q4_d" name="ds_q4" value="D">
+                        <label for="ds_q4_d">D) 4 pointers (quad-linked)</label>
+                    </div>
+                </article>
+
+                <!-- DSA Q5: BFS Graph Traversal Data Structure -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 5 of 5 (Data Structures &amp; Algorithms)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which auxiliary data structure is primarily utilized by the <strong>Breadth-First Search
+                            (BFS)</strong> graph traversal algorithm to visit vertices level-by-level?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q5_a" name="ds_q5" value="A">
+                        <label for="ds_q5_a">A) Queue (FIFO)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q5_b" name="ds_q5" value="B">
+                        <label for="ds_q5_b">B) Stack (LIFO)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q5_c" name="ds_q5" value="C">
+                        <label for="ds_q5_c">C) Min-Heap</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="ds_q5_d" name="ds_q5" value="D">
+                        <label for="ds_q5_d">D) Disjoint Set Union (DSU)</label>
+                    </div>
+                </article>
+
+            </div>
+
+            <hr class="custom-hr">
+
+            <!-- ========================================================
+                 SUBJECT 3: DATABASE MANAGEMENT SYSTEMS (CS203) QUESTIONS (Unlocked by Faculty)
+                 ======================================================== -->
+            <div id="sectionDBMS" class="hidden">
+
+                <!-- DBMS Q1: ER Modeling -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 1 of 5 (Database Systems)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In an Entity-Relationship (ER) model diagram, which geometric shape represents a <strong>Relationship Type</strong> connecting entities?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="db_q1_a" name="db_q1" value="A">
+                        <label for="db_q1_a">A) Rectangle</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q1_b" name="db_q1" value="B">
+                        <label for="db_q1_b">B) Diamond</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q1_c" name="db_q1" value="C">
+                        <label for="db_q1_c">C) Ellipse</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q1_d" name="db_q1" value="D">
+                        <label for="db_q1_d">D) Double Oval</label>
+                    </div>
+                </article>
+
+                <!-- DBMS Q2: Normalization -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 2 of 5 (Database Systems)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which Relational Database Normal Form explicitly eliminates <strong>Transitive Functional Dependencies</strong> among non-prime attributes?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="db_q2_a" name="db_q2" value="A">
+                        <label for="db_q2_a">A) First Normal Form (1NF)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q2_b" name="db_q2" value="B">
+                        <label for="db_q2_b">B) Second Normal Form (2NF)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q2_c" name="db_q2" value="C">
+                        <label for="db_q2_c">C) Third Normal Form (3NF)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q2_d" name="db_q2" value="D">
+                        <label for="db_q2_d">D) Domain-Key Normal Form (DKNF)</label>
+                    </div>
+                </article>
+
+                <!-- DBMS Q3: Relational Algebra -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 3 of 5 (Database Systems)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In pure Relational Algebra, which operator filters horizontal rows (tuples) satisfying a specified propositional selection predicate?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="db_q3_a" name="db_q3" value="A">
+                        <label for="db_q3_a">A) Projection (&pi;)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q3_b" name="db_q3" value="B">
+                        <label for="db_q3_b">B) Selection (&sigma;)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q3_c" name="db_q3" value="C">
+                        <label for="db_q3_c">C) Cartesian Product (&times;)</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q3_d" name="db_q3" value="D">
+                        <label for="db_q3_d">D) Natural Join (&bowtie;)</label>
+                    </div>
+                </article>
+
+                <!-- DBMS Q4: ACID Properties -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 4 of 5 (Database Systems)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        In database transaction management, what does the letter <strong>'I'</strong> represent in the <strong>ACID</strong> guarantees?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="db_q4_a" name="db_q4" value="A">
+                        <label for="db_q4_a">A) Integrity</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q4_b" name="db_q4" value="B">
+                        <label for="db_q4_b">B) Indexing</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q4_c" name="db_q4" value="C">
+                        <label for="db_q4_c">C) Isolation</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q4_d" name="db_q4" value="D">
+                        <label for="db_q4_d">D) Interoperability</label>
+                    </div>
+                </article>
+
+                <!-- DBMS Q5: SQL Filtering -->
+                <article class="ui-card hover-lift question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question 5 of 5 (Database Systems)</span>
+                        <span class="question-points">+2.0 Marks</span>
+                    </div>
+                    <p class="question-text">
+                        Which SQL clause must be used when applying condition filtering to aggregated group calculations (such as COUNT or AVG) generated by <code>GROUP BY</code>?
+                    </p>
+                    <div class="option-card">
+                        <input type="radio" id="db_q5_a" name="db_q5" value="A">
+                        <label for="db_q5_a">A) WHERE</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q5_b" name="db_q5" value="B">
+                        <label for="db_q5_b">B) ORDER BY</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q5_c" name="db_q5" value="C">
+                        <label for="db_q5_c">C) HAVING</label>
+                    </div>
+                    <div class="option-card">
+                        <input type="radio" id="db_q5_d" name="db_q5" value="D">
+                        <label for="db_q5_d">D) LIMIT</label>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Submit Action -->
+            <div id="submitContainer" class="action-center">
+                <button type="button" id="btnOpenModal" class="btn btn-primary btn-lg hover-scale">
+                    Submit Examination ➔
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- Modal Dialog -->
+    <div id="confirmationModal" class="modal-overlay">
+        <div class="modal-dialog animate-fade-in">
+            <h3 class="modal-title">⚠️ Confirm Exam Submission</h3>
+            <p class="modal-text">
+                Are you sure you want to finalize your examination session? Once submitted, your responses will be
+                evaluated against IIIT Kota answer keys and recorded permanently.
+            </p>
+            <div class="modal-notice">
+                <strong>Important:</strong> Please ensure all 5 questions have been attempted before confirming.
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="btnCancelModal" class="btn btn-outline">Review Answers</button>
+                <button type="button" onclick="document.getElementById('examForm').submit();"
+                    class="btn btn-primary">Yes, Final Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Semantic Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>ExamPortal</h4>
+                <p>Official Online Examination Portal for IIIT Kota Undergraduate Evaluations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions &amp; Guidelines</a></li>
+                    <li><a href="exam.html">Active Exam Lobby</a></li>
+                    <li><a href="results.html">Scoreboard &amp; Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Examination Helpdesk</h4>
+                <p class="footer-help-text">
+                    Academic Section &amp; Controller of Examinations<br>
+                    IIIT Kota Campus, Ranpur, Kota, Rajasthan 325003<br>
+                    Email: academics@iiitkota.ac.in<br>
+                    Hours: 09:00 AM – 05:00 PM IST
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Online Examination System. IIIT Kota Autonomous Academic Evaluation Cell. All Rights
+            Reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/timer.js"></script>
+</body>
+
+</html>
