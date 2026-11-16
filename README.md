@@ -8,11 +8,11 @@ An autonomous, secure, and proctored academic evaluation web portal engineered f
 
 | S.No. | Student ID (Roll No.) | Student Name | Role / Contribution |
 |:---:|:---:|:---|:---|
-| **1** | `2025KUCP1131` | **Deepanshu Lath** | Backend + Database + Deployment |
-| **2** | `2025KUCP1130` | **Ayush Raj** | Frontend Designing |
-| **3** | `2025KUCP1132` | **Shahbaz Alam** | HTML + CSS |
-| **4** | `2025KUCP1129` | **Sanjeet Yadav** | JavaScript + Database |
-| **5** | `2025KUCP1123` | **Manas Kumar** | Documentation & Testing |
+| **1** | `2025KUCP1131` | **Deepanshu Lath** | Backend + Database |
+| **2** | `2025KUCP1130` | **Ayush Raj** | Backend|
+| **3** | `2025KUCP1132` | **Shahbaz Alam** |Frontend |
+| **4** | `2025KUCP1129` | **Sanjeet Yadav** | Frontend |
+| **5** | `2025KUCP1123` | **Manas Kumar** | JavaScript |
 
 ---
 
