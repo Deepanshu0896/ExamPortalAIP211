@@ -21,14 +21,14 @@ function setCurrentUser(user) {
         return;
     }
     const val = JSON.stringify(user);
-    try { localStorage.setItem('examUser', val); } catch (e) {}
-    try { sessionStorage.setItem('examUser', val); } catch (e) {}
+    try { localStorage.setItem('examUser', val); } catch (e) { }
+    try { sessionStorage.setItem('examUser', val); } catch (e) { }
 }
 
 function clearCurrentUser() {
-    try { localStorage.removeItem('examUser'); } catch (e) {}
-    try { sessionStorage.removeItem('examUser'); } catch (e) {}
-    try { sessionStorage.removeItem('lastExamResult'); } catch (e) {}
+    try { localStorage.removeItem('examUser'); } catch (e) { }
+    try { sessionStorage.removeItem('examUser'); } catch (e) { }
+    try { sessionStorage.removeItem('lastExamResult'); } catch (e) { }
 }
 
 // --- Helper: Escape HTML strings to prevent HTML tag interpretation ---
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // If running on a web server, notify backend in background
                     if (window.location.protocol.startsWith('http')) {
                         try {
-                            fetch('../backend/logout.php').catch(() => {});
-                        } catch (err) {}
+                            fetch('../backend/logout.php').catch(() => { });
+                        } catch (err) { }
                     }
 
                     alert("🔒 You have been safely logged out.");
@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // If running on a live web server, terminate server session in background
             if (window.location.protocol.startsWith('http')) {
                 try {
-                    fetch('../backend/logout.php').catch(() => {});
-                } catch (err) {}
+                    fetch('../backend/logout.php').catch(() => { });
+                } catch (err) { }
             }
 
             alert("🔒 Faculty Admin session ended successfully.");
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const raw = localStorage.getItem('basePaperStatus') || sessionStorage.getItem('basePaperStatus');
             return raw ? JSON.parse(raw) : { WT: 'active', DS: 'active', DBMS: 'locked' };
-        } catch(e) { return { WT: 'active', DS: 'active', DBMS: 'locked' }; }
+        } catch (e) { return { WT: 'active', DS: 'active', DBMS: 'locked' }; }
     }
     function saveBaseLockState(obj) {
         localStorage.setItem('basePaperStatus', JSON.stringify(obj));
@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ['WT', 'DS', 'DBMS'].forEach(code => {
             const badge = document.getElementById(`badge_${code}`);
-            const btn   = document.getElementById(`btnToggle${code}`);
+            const btn = document.getElementById(`btnToggle${code}`);
             const isActive = state[code] === 'active';
             if (badge) {
-                badge.className   = isActive ? 'badge-status-active' : 'badge-status-locked';
+                badge.className = isActive ? 'badge-status-active' : 'badge-status-locked';
                 badge.textContent = isActive ? '🟢 Active / Live' : '🔒 Locked (Sealed)';
             }
             if (btn) {
@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ['WT', 'DS', 'DBMS'].forEach(code => {
             const n = baseQCfg[code] || 5;
             const marks = (10 / n).toFixed(1);
-            const qsEl  = document.getElementById(`qs_${code}`);
+            const qsEl = document.getElementById(`qs_${code}`);
             const mpqEl = document.getElementById(`mpq_${code}`);
-            if (qsEl)  qsEl.textContent  = `${n} Qs / 10 Marks`;
+            if (qsEl) qsEl.textContent = `${n} Qs / 10 Marks`;
             if (mpqEl) mpqEl.textContent = `${marks} Marks`;
         });
     }
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const raw = localStorage.getItem('baseQConfig') || sessionStorage.getItem('baseQConfig');
             return raw ? JSON.parse(raw) : { WT: 5, DS: 5, DBMS: 5 };
-        } catch(e) { return { WT: 5, DS: 5, DBMS: 5 }; }
+        } catch (e) { return { WT: 5, DS: 5, DBMS: 5 }; }
     }
     function saveBaseQConfig(obj) {
         localStorage.setItem('baseQConfig', JSON.stringify(obj));
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fd.append('subject_code', code);
                     fetch('../backend/admin_manage.php', { method: 'POST', body: fd })
                         .then(() => syncSubjectsFromBackend())
-                        .catch(() => {});
+                        .catch(() => { });
                 }
             });
         }
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.location.protocol.startsWith('http')) {
                 fetch('../backend/admin_manage.php', { method: 'POST', body: new FormData(formToggleDBMS) })
                     .then(() => syncSubjectsFromBackend())
-                    .catch(() => {});
+                    .catch(() => { });
             }
             alert(wasActive
                 ? '🔒 CS203 DBMS Paper LOCKED — student access blocked.'
@@ -228,8 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data && data.status === 'success' && Array.isArray(data.subjects)) {
                     const baseState = getBaseLockState();
-                    const baseQCfg  = getBaseQConfig();
-                    const extras    = [];
+                    const baseQCfg = getBaseQConfig();
+                    const extras = [];
 
                     data.subjects.forEach(sub => {
                         const code = sub.code.toUpperCase();
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // A3. ADD SUBJECT FORM — offline-first (admin.html)
     // ========================================================
     const formAddSubject = document.getElementById('formAddSubject');
-    const msgSubject     = document.getElementById('msgSubject');
+    const msgSubject = document.getElementById('msgSubject');
 
     // Helper: show inline message
     function showAdminMsg(el, text, isError) {
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const raw = localStorage.getItem('adminExtraSubjects') || sessionStorage.getItem('adminExtraSubjects');
             return raw ? JSON.parse(raw) : [];
-        } catch(e) { return []; }
+        } catch (e) { return []; }
     }
     function saveExtraSubjects(arr) {
         localStorage.setItem('adminExtraSubjects', JSON.stringify(arr));
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fd.append('subject_code', code);
                     fetch('../backend/admin_manage.php', { method: 'POST', body: fd })
                         .then(() => syncSubjectsFromBackend())
-                        .catch(() => {});
+                        .catch(() => { });
                 }
             });
         });
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fd.append('subject_code', code);
                     fetch('../backend/admin_manage.php', { method: 'POST', body: fd })
                         .then(() => syncSubjectsFromBackend())
-                        .catch(() => {});
+                        .catch(() => { });
                 }
             });
         });
@@ -399,23 +399,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update stat counters
     function updateAdminStats() {
-        const subjectCountEl  = document.getElementById('statSubjectCount');
+        const subjectCountEl = document.getElementById('statSubjectCount');
         const questionCountEl = document.getElementById('statQuestionCount');
-        const extras  = getExtraSubjects();
-        const qbank   = getAllQuestions();
+        const extras = getExtraSubjects();
+        const qbank = getAllQuestions();
         const baseState = getBaseLockState();
         const totalSubs = 3 + extras.length;
         const activeSubs = Object.values(baseState).filter(v => v === 'active').length
             + extras.filter(s => s.status === 'active').length;
         const lockedSubs = totalSubs - activeSubs;
 
-        if (subjectCountEl)  subjectCountEl.textContent  = totalSubs;
+        if (subjectCountEl) subjectCountEl.textContent = totalSubs;
         if (questionCountEl) questionCountEl.textContent = 15 + qbank.filter(q => q.isCustom).length;
 
-        const activeEl  = document.querySelector('.stat-card:nth-child(3) .stat-number');
-        const lockedEl  = document.querySelector('.stat-card:nth-child(4) .stat-number');
-        if (activeEl)  activeEl.textContent  = activeSubs;
-        if (lockedEl)  lockedEl.textContent  = lockedSubs;
+        const activeEl = document.querySelector('.stat-card:nth-child(3) .stat-number');
+        const lockedEl = document.querySelector('.stat-card:nth-child(4) .stat-number');
+        if (activeEl) activeEl.textContent = activeSubs;
+        if (lockedEl) lockedEl.textContent = lockedSubs;
     }
 
     // Dynamic dropdown & Question Bank tab synchronization
@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.location.protocol.startsWith('http')) {
                 fetch('../backend/admin_manage.php', { method: 'POST', body: fd })
                     .then(() => syncSubjectsFromBackend())
-                    .catch(() => {});
+                    .catch(() => { });
             }
         });
     }
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // A4. ADD QUESTION FORM — offline-first (admin.html)
     // ========================================================
     const formAddQuestion = document.getElementById('formAddQuestion');
-    const msgQuestion     = document.getElementById('msgQuestion');
+    const msgQuestion = document.getElementById('msgQuestion');
 
     // Built-in static question bank
     const BUILTIN_QUESTIONS = [
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const raw = localStorage.getItem('adminCustomQuestions') || sessionStorage.getItem('adminCustomQuestions');
             return raw ? JSON.parse(raw) : [];
-        } catch(e) { return []; }
+        } catch (e) { return []; }
     }
     function saveCustomQuestions(arr) {
         localStorage.setItem('adminCustomQuestions', JSON.stringify(arr));
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.location.protocol.startsWith('http')) {
                 fetch('../backend/admin_manage.php', { method: 'POST', body: fd })
                     .then(() => syncSubjectsFromBackend())
-                    .catch(() => {});
+                    .catch(() => { });
             }
         });
     }
@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // A5. QUESTION BANK VIEWER (admin.html)
     // ========================================================
     const qbankList = document.getElementById('qbankList');
-    const tabBtns   = document.querySelectorAll('.admin-tab-btn');
+    const tabBtns = document.querySelectorAll('.admin-tab-btn');
     let activeQFilter = 'WT';
 
     function renderQBank(filterCode) {
@@ -688,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wtCard) {
             const isWtActive = baseState['WT'] !== 'locked';
             const badge = wtCard.querySelector('.card-badge');
-            const hint  = wtCard.querySelector('.card-link-hint');
+            const hint = wtCard.querySelector('.card-link-hint');
             const backA = wtCard.querySelector('.card-3d-back a');
             if (badge) {
                 badge.className = `card-badge ${isWtActive ? 'badge-live' : 'badge-locked'}`;
@@ -699,11 +699,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isWtActive) {
                     backA.setAttribute('href', currentUser ? 'exam.html?subject=WT' : 'login.html?subject=WT');
                     backA.textContent = currentUser ? 'Start Test (CS201) ➔' : 'Login to Start Test';
-                    backA.className   = 'btn btn-white hover-scale card-test-btn';
+                    backA.className = 'btn btn-white hover-scale card-test-btn';
                 } else {
                     backA.setAttribute('href', 'exam.html?subject=WT');
                     backA.textContent = 'View Lock Notice';
-                    backA.className   = 'btn btn-white hover-scale';
+                    backA.className = 'btn btn-white hover-scale';
                 }
             }
         }
@@ -713,7 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dsCard) {
             const isDsActive = baseState['DS'] !== 'locked';
             const badge = dsCard.querySelector('.card-badge');
-            const hint  = dsCard.querySelector('.card-link-hint');
+            const hint = dsCard.querySelector('.card-link-hint');
             const backA = dsCard.querySelector('.card-3d-back a');
             if (badge) {
                 badge.className = `card-badge ${isDsActive ? 'badge-live' : 'badge-locked'}`;
@@ -724,11 +724,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isDsActive) {
                     backA.setAttribute('href', currentUser ? 'exam.html?subject=DS' : 'login.html?subject=DS');
                     backA.textContent = currentUser ? 'Start Test (CS202) ➔' : 'Login to Start Test';
-                    backA.className   = 'btn btn-white hover-scale card-test-btn';
+                    backA.className = 'btn btn-white hover-scale card-test-btn';
                 } else {
                     backA.setAttribute('href', 'exam.html?subject=DS');
                     backA.textContent = 'View Lock Notice';
-                    backA.className   = 'btn btn-white hover-scale';
+                    backA.className = 'btn btn-white hover-scale';
                 }
             }
         }
@@ -738,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dbmsCard) {
             const isDbmsActive = baseState['DBMS'] === 'active';
             const badge = dbmsCard.querySelector('.card-badge');
-            const hint  = dbmsCard.querySelector('.card-link-hint');
+            const hint = dbmsCard.querySelector('.card-link-hint');
             const backA = dbmsCard.querySelector('.card-3d-back a');
             if (badge) {
                 badge.className = `card-badge ${isDbmsActive ? 'badge-live' : 'badge-locked'}`;
@@ -749,11 +749,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isDbmsActive) {
                     backA.setAttribute('href', currentUser ? 'exam.html?subject=DBMS' : 'login.html?subject=DBMS');
                     backA.textContent = currentUser ? 'Start Test (CS203) ➔' : 'Login to Start Test';
-                    backA.className   = 'btn btn-white hover-scale card-test-btn';
+                    backA.className = 'btn btn-white hover-scale card-test-btn';
                 } else {
                     backA.setAttribute('href', 'exam.html?subject=DBMS');
                     backA.textContent = 'View Lock Notice';
-                    backA.className   = 'btn btn-white hover-scale';
+                    backA.className = 'btn btn-white hover-scale';
                 }
             }
         }
@@ -786,12 +786,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>Course:</strong> ${escapeHtml(s.name)}<br>
                            <strong>Total Marks:</strong> 10 Marks (${nQ} MCQs)<br>
                            <strong>Status:</strong> ${isActive ? 'Active (Ready)' : 'Restricted (Sealed by Admin)'}</p>
-                        ${isActive 
-                            ? `<a href="${currentUser ? `exam.html?subject=${encodeURIComponent(s.code)}` : `login.html?subject=${encodeURIComponent(s.code)}`}" class="btn btn-white hover-scale card-test-btn" data-subject="${escapeHtml(s.code)}">
+                        ${isActive
+                    ? `<a href="${currentUser ? `exam.html?subject=${encodeURIComponent(s.code)}` : `login.html?subject=${encodeURIComponent(s.code)}`}" class="btn btn-white hover-scale card-test-btn" data-subject="${escapeHtml(s.code)}">
                                   ${currentUser ? `Start Test (${escapeHtml(s.code)}) ➔` : 'Login to Start Test'}
                                </a>`
-                            : `<a href="exam.html?subject=${encodeURIComponent(s.code)}" class="btn btn-white hover-scale">View Lock Notice</a>`
-                        }
+                    : `<a href="exam.html?subject=${encodeURIComponent(s.code)}" class="btn btn-white hover-scale">View Lock Notice</a>`
+                }
                     </div>
                 </div>
             `;
@@ -857,6 +857,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetSubject = (urlParams.get('subject') || 'WT').toUpperCase();
             const nextParam = urlParams.get('next') || urlParams.get('redirect');
 
+            const isLocalStatic = window.location.protocol === 'file:' ||
+                (window.location.port !== '' && window.location.port !== '80' && window.location.port !== '443');
+
             // Admin identification
             if (rollVal.toUpperCase() === 'ADMIN01' || rollVal.toUpperCase() === 'ADMIN') {
                 const adminUser = {
@@ -867,37 +870,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 setCurrentUser(adminUser);
 
                 // If running in static preview mode (file:// or Live Server without PHP), handle client-side
-                if (window.location.protocol === 'file:' || window.location.port === '5500') {
-                    e.preventDefault();
-                    alert(`👑 Welcome, ${adminUser.name}! Entering Faculty Admin Settings.`);
-                    window.location.href = nextParam === 'results' ? 'results.html' : 'admin.html';
-                }
-            } else {
-                // Student identification
-                const knownStudents = {
-                    '21CS101': 'Rahul Sharma',
-                    '21CS102': 'Priya Patel'
-                };
-                const studentUser = {
-                    roll_no: rollVal || '21CS101',
-                    name: knownStudents[rollVal] || 'Student Examinee',
-                    role: 'student'
-                };
-                setCurrentUser(studentUser);
-
-                // If running in static preview mode (file:// or Live Server without PHP), handle client-side
-                if (window.location.protocol === 'file:' || window.location.port === '5500') {
-                    e.preventDefault();
-                    if (nextParam === 'results') {
-                        alert(`🎓 Welcome, ${studentUser.name} (${studentUser.roll_no})! Loading Academic Scoreboard.`);
-                        window.location.href = 'results.html';
-                    } else {
-                        alert(`🎓 Welcome, ${studentUser.name} (${studentUser.roll_no})! Entering Examination Session.`);
-                        window.location.href = `exam.html?subject=${targetSubject}`;
+                    if (isLocalStatic) {
+                        e.preventDefault();
+                        alert(`👑 Welcome, ${adminUser.name}! Entering Faculty Admin Settings.`);
+                        window.location.href = nextParam === 'results' ? 'results.html' : 'admin.html';
                     }
-                }
-            }
-        });
+                } else {
+                    // Student identification
+                    const knownStudents = {
+                        '21CS101': 'Rahul Sharma',
+                        '21CS102': 'Priya Patel'
+                    };
+                    const studentUser = {
+                        roll_no: rollVal || '21CS101',
+                        name: knownStudents[rollVal] || 'Student Examinee',
+                        role: 'student'
+                    };
+                    setCurrentUser(studentUser);
+
+                    // If running in static preview mode (file:// or Live Server without PHP), handle client-side
+                        if (isLocalStatic) {
+                            e.preventDefault();
+                            if (nextParam === 'results') {
+                                alert(`🎓 Welcome, ${studentUser.name} (${studentUser.roll_no})! Loading Academic Scoreboard.`);
+                                window.location.href = 'results.html';
+                            } else {
+                                alert(`🎓 Welcome, ${studentUser.name} (${studentUser.roll_no})! Entering Examination Session.`);
+                                window.location.href = `exam.html?subject=${targetSubject}`;
+                            }
+                        }
+                    }
+                });
     }
 
     // ========================================================
@@ -973,7 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render HTML with question_ids hidden inputs and radio options
         targetSection.innerHTML = selected.map((q, idx) => {
             const qNum = idx + 1;
-            const qId  = q.id || qNum;
+            const qId = q.id || qNum;
             const opts = ['A', 'B', 'C', 'D'];
             const optTexts = { A: q.opt_a, B: q.opt_b, C: q.opt_c || '', D: q.opt_d || '' };
             const optCards = opts.filter(o => optTexts[o]).map(opt => `
@@ -1084,7 +1087,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (normalizedSubj === 'CS202') normalizedSubj = 'DS';
             else if (normalizedSubj === 'CS203') normalizedSubj = 'DBMS';
 
-            const extraSubject = getExtraSubjects().find(s => 
+            const extraSubject = getExtraSubjects().find(s =>
                 (s.code && s.code.toUpperCase() === normalizedSubj) ||
                 (s.course_code && s.course_code.toUpperCase() === normalizedSubj) ||
                 (s.name && s.name.toUpperCase() === normalizedSubj)
@@ -1207,266 +1210,265 @@ document.addEventListener('DOMContentLoaded', () => {
             initExamLobby();
         }
 
-            // Dual-mode exam submission:
-            // If running on file:// or static server (without PHP parser), evaluate client-side
-            examForm.addEventListener('submit', (e) => {
-                const isStaticMode = window.location.protocol === 'file:' || window.location.port === '5500';
-                if (isStaticMode) {
-                    e.preventDefault();
+        // Dual-mode exam submission:
+        // If running on file:// or static server (without PHP parser), evaluate client-side
+        if (examForm) examForm.addEventListener('submit', (e) => {
+            const isStaticMode = window.location.protocol === 'file:' || window.location.port === '5500';
+            if (isStaticMode) {
+                e.preventDefault();
 
-                    const currSubjCode = formSubjectCode ? formSubjectCode.value : 'WT';
+                const currSubjCode = formSubjectCode ? formSubjectCode.value : 'WT';
 
-                    // Use the dynamically rendered question answer key (random questions picked at load time)
-                    // Falls back to built-in defaults if dynamic render didn't run
-                    const fallbackKeys = {
-                        'WT':   { q1: 'B', q2: 'A', q3: 'B', q4: 'B', q5: 'B' },
-                        'DS':   { q1: 'B', q2: 'B', q3: 'B', q4: 'B', q5: 'C' },
-                        'DBMS': { q1: 'B', q2: 'C', q3: 'B', q4: 'C', q5: 'C' }
-                    };
-                    const activeKey = activeDynamicAnswerKey || fallbackKeys[currSubjCode] || fallbackKeys['WT'];
-                    const totalQs = Object.keys(activeKey).length || 5;
+                // Use the dynamically rendered question answer key (random questions picked at load time)
+                // Falls back to built-in defaults if dynamic render didn't run
+                const fallbackKeys = {
+                    'WT': { q1: 'B', q2: 'A', q3: 'B', q4: 'B', q5: 'B' },
+                    'DS': { q1: 'B', q2: 'B', q3: 'B', q4: 'B', q5: 'C' },
+                    'DBMS': { q1: 'B', q2: 'C', q3: 'B', q4: 'C', q5: 'C' }
+                };
+                const activeKey = activeDynamicAnswerKey || fallbackKeys[currSubjCode] || fallbackKeys['WT'];
+                const totalQs = Object.keys(activeKey).length || 5;
 
-                    // Read marks-per-question from data attr (set by renderDynamicQuestions)
-                    let marksPerQ = 2.0;
-                    if (formSubjectCode) {
-                        const mpqAttr = parseFloat(formSubjectCode.getAttribute('data-marks-per-q'));
-                        if (mpqAttr && mpqAttr > 0) marksPerQ = mpqAttr;
-                    }
-                    const totalMarks = parseFloat((marksPerQ * totalQs).toFixed(2));
-
-                    let correctCount = 0;
-                    for (let q = 1; q <= totalQs; q++) {
-                        const chosen = document.querySelector(`input[name="q${q}"]:checked`);
-                        if (chosen && chosen.value === activeKey[`q${q}`]) {
-                            correctCount++;
-                        }
-                    }
-
-                    const score = parseFloat((correctCount * marksPerQ).toFixed(2));
-                    const percentage = (score / totalMarks) * 100;
-                    let letterGrade = 'F';
-                    let gradePoint = 0;
-
-                    if (percentage >= 90) { letterGrade = 'A+'; gradePoint = 10; }
-                    else if (percentage >= 80) { letterGrade = 'A'; gradePoint = 9; }
-                    else if (percentage >= 70) { letterGrade = 'B+'; gradePoint = 8; }
-                    else if (percentage >= 60) { letterGrade = 'B'; gradePoint = 7; }
-                    else if (percentage >= 50) { letterGrade = 'C+'; gradePoint = 6; }
-                    else if (percentage >= 40) { letterGrade = 'C'; gradePoint = 5; }
-                    else if (percentage >= 35) { letterGrade = 'D'; gradePoint = 4; }
-                    else { letterGrade = 'F'; gradePoint = 0; }
-
-                    const courseCode = currSubjCode === 'WT' ? 'CS201' : (currSubjCode === 'DS' ? 'CS202' : (currSubjCode === 'DBMS' ? 'CS203' : currSubjCode));
-                    const examResult = {
-                        roll_no: currentUser.roll_no,
-                        name: currentUser.name || 'Candidate',
-                        subject_code: currSubjCode,
-                        course_code: courseCode,
-                        subject_name: formSubject ? formSubject.value : 'Web Development',
-                        score: score,
-                        total_marks: totalMarks,
-                        percentage: percentage,
-                        grade: letterGrade,
-                        grade_point: gradePoint
-                    };
-
-                    sessionStorage.setItem('lastExamResult', JSON.stringify(examResult));
-                    alert(`✅ Examination Submitted Successfully!\nObtained Score: ${score}/${totalMarks} (${percentage.toFixed(1)}%)\nIIIT Kota Grade: ${letterGrade} (${gradePoint} Points)\n\nNavigating to your verified scorecard...`);
-                    window.location.href = `results.html?roll_no=${encodeURIComponent(currentUser.roll_no)}`;
+                // Read marks-per-question from data attr (set by renderDynamicQuestions)
+                let marksPerQ = 2.0;
+                if (formSubjectCode) {
+                    const mpqAttr = parseFloat(formSubjectCode.getAttribute('data-marks-per-q'));
+                    if (mpqAttr && mpqAttr > 0) marksPerQ = mpqAttr;
                 }
-            });
-        }
+                const totalMarks = parseFloat((marksPerQ * totalQs).toFixed(2));
+
+                let correctCount = 0;
+                for (let q = 1; q <= totalQs; q++) {
+                    const chosen = document.querySelector(`input[name="q${q}"]:checked`);
+                    if (chosen && chosen.value === activeKey[`q${q}`]) {
+                        correctCount++;
+                    }
+                }
+
+                const score = parseFloat((correctCount * marksPerQ).toFixed(2));
+                const percentage = (score / totalMarks) * 100;
+                let letterGrade = 'F';
+                let gradePoint = 0;
+
+                if (percentage >= 90) { letterGrade = 'A+'; gradePoint = 10; }
+                else if (percentage >= 80) { letterGrade = 'A'; gradePoint = 9; }
+                else if (percentage >= 70) { letterGrade = 'B+'; gradePoint = 8; }
+                else if (percentage >= 60) { letterGrade = 'B'; gradePoint = 7; }
+                else if (percentage >= 50) { letterGrade = 'C+'; gradePoint = 6; }
+                else if (percentage >= 40) { letterGrade = 'C'; gradePoint = 5; }
+                else if (percentage >= 35) { letterGrade = 'D'; gradePoint = 4; }
+                else { letterGrade = 'F'; gradePoint = 0; }
+
+                const courseCode = currSubjCode === 'WT' ? 'CS201' : (currSubjCode === 'DS' ? 'CS202' : (currSubjCode === 'DBMS' ? 'CS203' : currSubjCode));
+                const examResult = {
+                    roll_no: currentUser.roll_no,
+                    name: currentUser.name || 'Candidate',
+                    subject_code: currSubjCode,
+                    course_code: courseCode,
+                    subject_name: formSubject ? formSubject.value : 'Web Development',
+                    score: score,
+                    total_marks: totalMarks,
+                    percentage: percentage,
+                    grade: letterGrade,
+                    grade_point: gradePoint
+                };
+
+                sessionStorage.setItem('lastExamResult', JSON.stringify(examResult));
+                alert(`✅ Examination Submitted Successfully!\nObtained Score: ${score}/${totalMarks} (${percentage.toFixed(1)}%)\nIIIT Kota Grade: ${letterGrade} (${gradePoint} Points)\n\nNavigating to your verified scorecard...`);
+                window.location.href = `results.html?roll_no=${encodeURIComponent(currentUser.roll_no)}`;
+            }
+        });
     }
 
     // ========================================================
     // E. SEARCH-DRIVEN SCORECARD CONTROLLER (results.html)
     // ========================================================
-    const scorecardSearchForm      = document.getElementById('scorecardSearchForm');
-    const marksheetSection         = document.getElementById('marksheetSection');
-    const initialSearchNotice      = document.getElementById('initialSearchNotice');
-    const noRecordNotice           = document.getElementById('noRecordNotice');
-    const searchedRollText         = document.getElementById('searchedRollText');
-    const filterRollInput          = document.getElementById('filter_roll');
-    const loginRequiredNoticeResults = document.getElementById('loginRequiredNotice');
-    const protectedScoreboardContent = document.getElementById('protectedScoreboardContent');
-    const scorecardSearchTitle     = document.getElementById('scorecardSearchTitle');
-    const studentScorecardBanner   = document.getElementById('studentScorecardBanner');
-    const adminCandidateSelectCol  = document.getElementById('adminCandidateSelectCol');
-    const selectCandidate          = document.getElementById('select_candidate');
-    const filterRollLabel          = document.getElementById('filterRollLabel');
-    const scorecardSearchHint      = document.getElementById('scorecardSearchHint');
-    const btnSearchRecords         = document.getElementById('btnSearchRecords');
-    const searchRollCol            = document.getElementById('searchRollCol');
-    const scorecardTableBody       = document.getElementById('scorecardTableBody');
+    const scorecardSearchForm = document.getElementById('scorecardSearchForm');
+const marksheetSection = document.getElementById('marksheetSection');
+const initialSearchNotice = document.getElementById('initialSearchNotice');
+const noRecordNotice = document.getElementById('noRecordNotice');
+const searchedRollText = document.getElementById('searchedRollText');
+const filterRollInput = document.getElementById('filter_roll');
+const loginRequiredNoticeResults = document.getElementById('loginRequiredNotice');
+const protectedScoreboardContent = document.getElementById('protectedScoreboardContent');
+const scorecardSearchTitle = document.getElementById('scorecardSearchTitle');
+const studentScorecardBanner = document.getElementById('studentScorecardBanner');
+const adminCandidateSelectCol = document.getElementById('adminCandidateSelectCol');
+const selectCandidate = document.getElementById('select_candidate');
+const filterRollLabel = document.getElementById('filterRollLabel');
+const scorecardSearchHint = document.getElementById('scorecardSearchHint');
+const btnSearchRecords = document.getElementById('btnSearchRecords');
+const searchRollCol = document.getElementById('searchRollCol');
+const scorecardTableBody = document.getElementById('scorecardTableBody');
 
-    // Only activate if we're on results.html (marksheetSection exists)
-    if (marksheetSection && initialSearchNotice) {
+// Only activate if we're on results.html (marksheetSection exists)
+if (marksheetSection && initialSearchNotice) {
 
-        // ----------------------------------------------------------------
-        // STEP 1: Gate — block unauthenticated access immediately
-        // ----------------------------------------------------------------
-        if (!currentUser) {
-            if (loginRequiredNoticeResults) loginRequiredNoticeResults.classList.remove('hidden');
-            if (protectedScoreboardContent) protectedScoreboardContent.classList.add('hidden');
-            if (window.history && window.history.replaceState) {
-                window.history.replaceState(null, '', window.location.pathname);
-            }
-            return; // Stop all further execution on this page
+    // ----------------------------------------------------------------
+    // STEP 1: Gate — block unauthenticated access immediately
+    // ----------------------------------------------------------------
+    if (!currentUser) {
+        if (loginRequiredNoticeResults) loginRequiredNoticeResults.classList.remove('hidden');
+        if (protectedScoreboardContent) protectedScoreboardContent.classList.add('hidden');
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname);
         }
+        return; // Stop all further execution on this page
+    }
 
-        // Authenticated: show protected content, hide login notice
-        if (loginRequiredNoticeResults) loginRequiredNoticeResults.classList.add('hidden');
-        if (protectedScoreboardContent) protectedScoreboardContent.classList.remove('hidden');
+    // Authenticated: show protected content, hide login notice
+    if (loginRequiredNoticeResults) loginRequiredNoticeResults.classList.add('hidden');
+    if (protectedScoreboardContent) protectedScoreboardContent.classList.remove('hidden');
 
-        const isAdmin = currentUser.role === 'admin';
+    const isAdmin = currentUser.role === 'admin';
 
-        // ----------------------------------------------------------------
-        // STEP 2: Role-Based UI Configuration
-        // ----------------------------------------------------------------
-        if (isAdmin) {
-            // ── ADMIN VIEW ──
-            if (scorecardSearchTitle) scorecardSearchTitle.innerHTML = '🛡️ Faculty Admin &mdash; Candidate Marksheet &amp; Result Verification Console';
-            if (studentScorecardBanner) studentScorecardBanner.classList.add('hidden');
-            if (adminCandidateSelectCol) adminCandidateSelectCol.classList.remove('hidden');
-            if (searchRollCol) searchRollCol.classList.remove('hidden');
-            if (scorecardSearchHint) scorecardSearchHint.textContent = '* Admin Mode: Quick-select any enrolled candidate, enter Roll Number, or type "ALL" to inspect verified marksheets.';
-            if (filterRollInput) filterRollInput.removeAttribute('readonly');
+    // ----------------------------------------------------------------
+    // STEP 2: Role-Based UI Configuration
+    // ----------------------------------------------------------------
+    if (isAdmin) {
+        // ── ADMIN VIEW ──
+        if (scorecardSearchTitle) scorecardSearchTitle.innerHTML = '🛡️ Faculty Admin &mdash; Candidate Marksheet &amp; Result Verification Console';
+        if (studentScorecardBanner) studentScorecardBanner.classList.add('hidden');
+        if (adminCandidateSelectCol) adminCandidateSelectCol.classList.remove('hidden');
+        if (searchRollCol) searchRollCol.classList.remove('hidden');
+        if (scorecardSearchHint) scorecardSearchHint.textContent = '* Admin Mode: Quick-select any enrolled candidate, enter Roll Number, or type "ALL" to inspect verified marksheets.';
+        if (filterRollInput) filterRollInput.removeAttribute('readonly');
 
-            // Sync quick-select → search input → filter
-            if (selectCandidate) {
-                selectCandidate.addEventListener('change', () => {
-                    const selVal = selectCandidate.value;
-                    if (filterRollInput) filterRollInput.value = selVal;
-                    applyScorecardFilter(selVal);
-                });
-            }
-
-        } else {
-            // ── STUDENT VIEW: Strict Privacy ──
-            if (scorecardSearchTitle) scorecardSearchTitle.innerHTML = '🎓 My Official Examination Marksheet &amp; Academic Transcript';
-
-            // Show identity banner with authenticated name & roll number
-            if (studentScorecardBanner) {
-                studentScorecardBanner.classList.remove('hidden');
-                const nameEl = document.getElementById('studentBannerName');
-                const rollEl = document.getElementById('studentBannerRoll');
-                if (nameEl) nameEl.textContent = currentUser.name || 'Candidate';
-                if (rollEl) rollEl.textContent  = currentUser.roll_no;
-            }
-
-            // Student privacy: hide candidate selector and roll input completely
-            if (adminCandidateSelectCol) adminCandidateSelectCol.classList.add('hidden');
-            if (searchRollCol) searchRollCol.classList.add('hidden');
-
-            if (scorecardSearchHint) scorecardSearchHint.textContent = '🔒 Student Privacy Protected: Under IIIT Kota Ordinances, you may only view your own verified marksheet.';
-            if (btnSearchRecords) btnSearchRecords.textContent = 'Refresh My Marksheet ➔';
-        }
-
-        // ----------------------------------------------------------------
-        // STEP 3: Live Backend Renderer with Offline Fallback
-        // ----------------------------------------------------------------
-        const filterSubjectSelect = document.getElementById('filter_subject');
-
-        function renderLiveRecords(records, targetRoll, targetSubject = 'ALL') {
-            if (!scorecardTableBody) return false;
-
-            // Filter by subject if specified
-            let filteredRecords = records;
-            if (targetSubject && targetSubject !== 'ALL') {
-                const subQuery = targetSubject.toUpperCase();
-                filteredRecords = records.filter(r => 
-                    (r.course_code && r.course_code.toUpperCase() === subQuery) ||
-                    (r.subject && r.subject.toUpperCase() === subQuery) ||
-                    (r.subject_code && r.subject_code.toUpperCase() === subQuery)
-                );
-            }
-
-            // Group records by roll_no
-            const grouped = {};
-            filteredRecords.forEach(r => {
-                const roll = r.roll_no.toUpperCase();
-                if (!grouped[roll]) grouped[roll] = [];
-                grouped[roll].push(r);
+        // Sync quick-select → search input → filter
+        if (selectCandidate) {
+            selectCandidate.addEventListener('change', () => {
+                const selVal = selectCandidate.value;
+                if (filterRollInput) filterRollInput.value = selVal;
+                applyScorecardFilter(selVal);
             });
+        }
 
-            // Also check recently submitted in-memory exam
-            const recentRaw = sessionStorage.getItem('lastExamResult');
-            if (recentRaw) {
-                try {
-                    const recent = JSON.parse(recentRaw);
-                    const rRoll = recent.roll_no.toUpperCase();
-                    const subMatch = (!targetSubject || targetSubject === 'ALL') ||
-                        (recent.subject_code && recent.subject_code.toUpperCase() === targetSubject.toUpperCase()) ||
-                        (recent.course_code && recent.course_code.toUpperCase() === targetSubject.toUpperCase()) ||
-                        (recent.subject_name && recent.subject_name.toUpperCase() === targetSubject.toUpperCase());
+    } else {
+        // ── STUDENT VIEW: Strict Privacy ──
+        if (scorecardSearchTitle) scorecardSearchTitle.innerHTML = '🎓 My Official Examination Marksheet &amp; Academic Transcript';
 
-                    if ((targetRoll === 'ALL' || rRoll === targetRoll) && subMatch) {
-                        if (!grouped[rRoll]) grouped[rRoll] = [];
-                        // Check if already in grouped list
-                        const alreadyExists = grouped[rRoll].some(x => x.subject === recent.subject_name);
-                        if (!alreadyExists) {
-                            grouped[rRoll].push({
-                                roll_no: recent.roll_no,
-                                student_name: recent.name || 'Candidate',
-                                subject: recent.subject_name,
-                                course_code: recent.course_code || (recent.subject_code === 'DS' ? 'CS202' : (recent.subject_code === 'DBMS' ? 'CS203' : (recent.subject_code === 'WT' ? 'CS201' : recent.subject_code))),
-                                score: recent.score,
-                                total_marks: recent.total_marks || 10,
-                                grade: recent.grade,
-                                grade_point: recent.grade_point
-                            });
-                        }
+        // Show identity banner with authenticated name & roll number
+        if (studentScorecardBanner) {
+            studentScorecardBanner.classList.remove('hidden');
+            const nameEl = document.getElementById('studentBannerName');
+            const rollEl = document.getElementById('studentBannerRoll');
+            if (nameEl) nameEl.textContent = currentUser.name || 'Candidate';
+            if (rollEl) rollEl.textContent = currentUser.roll_no;
+        }
+
+        // Student privacy: hide candidate selector and roll input completely
+        if (adminCandidateSelectCol) adminCandidateSelectCol.classList.add('hidden');
+        if (searchRollCol) searchRollCol.classList.add('hidden');
+
+        if (scorecardSearchHint) scorecardSearchHint.textContent = '🔒 Student Privacy Protected: Under IIIT Kota Ordinances, you may only view your own verified marksheet.';
+        if (btnSearchRecords) btnSearchRecords.textContent = 'Refresh My Marksheet ➔';
+    }
+
+    // ----------------------------------------------------------------
+    // STEP 3: Live Backend Renderer with Offline Fallback
+    // ----------------------------------------------------------------
+    const filterSubjectSelect = document.getElementById('filter_subject');
+
+    function renderLiveRecords(records, targetRoll, targetSubject = 'ALL') {
+        if (!scorecardTableBody) return false;
+
+        // Filter by subject if specified
+        let filteredRecords = records;
+        if (targetSubject && targetSubject !== 'ALL') {
+            const subQuery = targetSubject.toUpperCase();
+            filteredRecords = records.filter(r =>
+                (r.course_code && r.course_code.toUpperCase() === subQuery) ||
+                (r.subject && r.subject.toUpperCase() === subQuery) ||
+                (r.subject_code && r.subject_code.toUpperCase() === subQuery)
+            );
+        }
+
+        // Group records by roll_no
+        const grouped = {};
+        filteredRecords.forEach(r => {
+            const roll = r.roll_no.toUpperCase();
+            if (!grouped[roll]) grouped[roll] = [];
+            grouped[roll].push(r);
+        });
+
+        // Also check recently submitted in-memory exam
+        const recentRaw = sessionStorage.getItem('lastExamResult');
+        if (recentRaw) {
+            try {
+                const recent = JSON.parse(recentRaw);
+                const rRoll = recent.roll_no.toUpperCase();
+                const subMatch = (!targetSubject || targetSubject === 'ALL') ||
+                    (recent.subject_code && recent.subject_code.toUpperCase() === targetSubject.toUpperCase()) ||
+                    (recent.course_code && recent.course_code.toUpperCase() === targetSubject.toUpperCase()) ||
+                    (recent.subject_name && recent.subject_name.toUpperCase() === targetSubject.toUpperCase());
+
+                if ((targetRoll === 'ALL' || rRoll === targetRoll) && subMatch) {
+                    if (!grouped[rRoll]) grouped[rRoll] = [];
+                    // Check if already in grouped list
+                    const alreadyExists = grouped[rRoll].some(x => x.subject === recent.subject_name);
+                    if (!alreadyExists) {
+                        grouped[rRoll].push({
+                            roll_no: recent.roll_no,
+                            student_name: recent.name || 'Candidate',
+                            subject: recent.subject_name,
+                            course_code: recent.course_code || (recent.subject_code === 'DS' ? 'CS202' : (recent.subject_code === 'DBMS' ? 'CS203' : (recent.subject_code === 'WT' ? 'CS201' : recent.subject_code))),
+                            score: recent.score,
+                            total_marks: recent.total_marks || 10,
+                            grade: recent.grade,
+                            grade_point: recent.grade_point
+                        });
                     }
-                } catch (e) {}
-            }
+                }
+            } catch (e) { }
+        }
 
-            const rollKeys = Object.keys(grouped);
-            if (!rollKeys.length) return false;
+        const rollKeys = Object.keys(grouped);
+        if (!rollKeys.length) return false;
 
-            let html = '';
+        let html = '';
 
-            rollKeys.forEach(roll => {
-                const list = grouped[roll];
-                const studentName = list[0].student_name || 'Candidate';
-                const rowCount = list.length;
-                let totalScored = 0;
-                let totalMax = 0;
-                let totalGradePoints = 0;
+        rollKeys.forEach(roll => {
+            const list = grouped[roll];
+            const studentName = list[0].student_name || 'Candidate';
+            const rowCount = list.length;
+            let totalScored = 0;
+            let totalMax = 0;
+            let totalGradePoints = 0;
 
-                list.forEach((item, idx) => {
-                    totalScored += Number(item.score);
-                    totalMax    += Number(item.total_marks);
-                    totalGradePoints += Number(item.grade_point);
+            list.forEach((item, idx) => {
+                totalScored += Number(item.score);
+                totalMax += Number(item.total_marks);
+                totalGradePoints += Number(item.grade_point);
 
-                    const scoreClass = item.score >= 8 ? 'score-good' : (item.score >= 5 ? 'score-mid' : 'score-low');
-                    const badgeClass = item.score >= 8 ? 'badge-grade-top' : 'badge-grade-pass';
-                    const gradeRaw = String(item.grade || '');
-                    const displayGrade = gradeRaw.includes('Pts') ? gradeRaw : `${gradeRaw} (${item.grade_point} Pts)`;
+                const scoreClass = item.score >= 8 ? 'score-good' : (item.score >= 5 ? 'score-mid' : 'score-low');
+                const badgeClass = item.score >= 8 ? 'badge-grade-top' : 'badge-grade-pass';
+                const gradeRaw = String(item.grade || '');
+                const displayGrade = gradeRaw.includes('Pts') ? gradeRaw : `${gradeRaw} (${item.grade_point} Pts)`;
 
-                    html += `<tr class="student-record" data-roll="${escapeHtml(roll)}">`;
-                    if (idx === 0) {
-                        html += `
+                html += `<tr class="student-record" data-roll="${escapeHtml(roll)}">`;
+                if (idx === 0) {
+                    html += `
                             <td rowspan="${rowCount}" class="td-student-roll">${escapeHtml(roll)}</td>
                             <td rowspan="${rowCount}" class="td-student-name">
                                 ${escapeHtml(studentName)}<br>
                                 <small class="td-student-sub">B.Tech CSE - IIIT Kota</small>
                             </td>
                         `;
-                    }
-                    html += `
+                }
+                html += `
                         <td>${escapeHtml(item.course_code)}</td>
                         <td>${escapeHtml(item.subject)}</td>
                         <td class="text-center">${item.total_marks}</td>
                         <td class="${scoreClass}">${item.score}</td>
                         <td class="text-center"><span class="${badgeClass}">${escapeHtml(displayGrade)}</span></td>
                     </tr>`;
-                });
+            });
 
-                // SGPA Aggregated Row
-                const sgpa = rowCount > 0 ? (totalGradePoints / rowCount).toFixed(2) : '0.00';
-                const pct  = totalMax > 0 ? ((totalScored / totalMax) * 100).toFixed(1) : '0.0';
+            // SGPA Aggregated Row
+            const sgpa = rowCount > 0 ? (totalGradePoints / rowCount).toFixed(2) : '0.00';
+            const pct = totalMax > 0 ? ((totalScored / totalMax) * 100).toFixed(1) : '0.0';
 
-                html += `
+            html += `
                     <tr class="total-row student-record" data-roll="${escapeHtml(roll)}">
                         <td colspan="4" class="total-label">Aggregated Performance for ${escapeHtml(roll)}:</td>
                         <td class="text-center">${totalMax}</td>
@@ -1474,206 +1476,206 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td class="text-center"><span class="badge-grade-top">SGPA: ${sgpa} (${pct}%)</span></td>
                     </tr>
                 `;
-            });
+        });
 
-            scorecardTableBody.innerHTML = html;
-            return true;
+        scorecardTableBody.innerHTML = html;
+        return true;
+    }
+
+    // ----------------------------------------------------------------
+    // STEP 4: Core filter function (MySQL API + DOM fallback)
+    // ----------------------------------------------------------------
+    function applyScorecardFilter(queryRoll, querySubject) {
+        const targetRoll = isAdmin
+            ? (queryRoll || '').trim().toUpperCase()
+            : currentUser.roll_no.trim().toUpperCase();
+        const targetSubj = (querySubject !== undefined ? querySubject : (filterSubjectSelect ? filterSubjectSelect.value : 'ALL')) || 'ALL';
+
+        // Admin initial empty state
+        if (isAdmin && !targetRoll) {
+            if (initialSearchNotice) initialSearchNotice.classList.remove('hidden');
+            if (marksheetSection) marksheetSection.classList.add('hidden');
+            if (noRecordNotice) noRecordNotice.classList.add('hidden');
+            return;
         }
 
-        // ----------------------------------------------------------------
-        // STEP 4: Core filter function (MySQL API + DOM fallback)
-        // ----------------------------------------------------------------
-        function applyScorecardFilter(queryRoll, querySubject) {
-            const targetRoll = isAdmin
-                ? (queryRoll || '').trim().toUpperCase()
-                : currentUser.roll_no.trim().toUpperCase();
-            const targetSubj = (querySubject !== undefined ? querySubject : (filterSubjectSelect ? filterSubjectSelect.value : 'ALL')) || 'ALL';
+        if (initialSearchNotice) initialSearchNotice.classList.add('hidden');
+        if (filterRollInput && isAdmin) filterRollInput.value = targetRoll;
 
-            // Admin initial empty state
-            if (isAdmin && !targetRoll) {
-                if (initialSearchNotice) initialSearchNotice.classList.remove('hidden');
-                if (marksheetSection) marksheetSection.classList.add('hidden');
-                if (noRecordNotice) noRecordNotice.classList.add('hidden');
-                return;
-            }
+        // Try Live Backend Fetch if connected to a web server
+        if (window.location.protocol.startsWith('http')) {
+            const fetchUrl = `../backend/get_results.php?roll_no=${encodeURIComponent(targetRoll)}&subject=${encodeURIComponent(targetSubj)}`;
+            fetch(fetchUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.status === 'success') {
+                        // Update admin candidate dropdown options dynamically if provided
+                        if (isAdmin && selectCandidate && data.candidates && data.candidates.length) {
+                            const currentVal = selectCandidate.value;
+                            let optionsHtml = '<option value="ALL">All Enrolled Candidates (Overview)</option>';
+                            data.candidates.forEach(c => {
+                                optionsHtml += `<option value="${escapeHtml(c.roll_no)}">${escapeHtml(c.roll_no)} — ${escapeHtml(c.name)} (B.Tech CSE)</option>`;
+                            });
+                            selectCandidate.innerHTML = optionsHtml;
+                            selectCandidate.value = currentVal || targetRoll || 'ALL';
+                        }
 
-            if (initialSearchNotice) initialSearchNotice.classList.add('hidden');
-            if (filterRollInput && isAdmin) filterRollInput.value = targetRoll;
-
-            // Try Live Backend Fetch if connected to a web server
-            if (window.location.protocol.startsWith('http')) {
-                const fetchUrl = `../backend/get_results.php?roll_no=${encodeURIComponent(targetRoll)}&subject=${encodeURIComponent(targetSubj)}`;
-                fetch(fetchUrl)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data.status === 'success') {
-                            // Update admin candidate dropdown options dynamically if provided
-                            if (isAdmin && selectCandidate && data.candidates && data.candidates.length) {
-                                const currentVal = selectCandidate.value;
-                                let optionsHtml = '<option value="ALL">All Enrolled Candidates (Overview)</option>';
-                                data.candidates.forEach(c => {
-                                    optionsHtml += `<option value="${escapeHtml(c.roll_no)}">${escapeHtml(c.roll_no)} — ${escapeHtml(c.name)} (B.Tech CSE)</option>`;
-                                });
-                                selectCandidate.innerHTML = optionsHtml;
-                                selectCandidate.value = currentVal || targetRoll || 'ALL';
-                            }
-
-                            if (data.records && data.records.length > 0) {
-                                const hasRows = renderLiveRecords(data.records, targetRoll, targetSubj);
-                                if (hasRows) {
-                                    if (marksheetSection) marksheetSection.classList.remove('hidden');
-                                    if (noRecordNotice)   noRecordNotice.classList.add('hidden');
-                                    return;
-                                }
+                        if (data.records && data.records.length > 0) {
+                            const hasRows = renderLiveRecords(data.records, targetRoll, targetSubj);
+                            if (hasRows) {
+                                if (marksheetSection) marksheetSection.classList.remove('hidden');
+                                if (noRecordNotice) noRecordNotice.classList.add('hidden');
+                                return;
                             }
                         }
-                        // If no database records returned, fallback to client-side table
-                        fallbackFilter(targetRoll, targetSubj);
-                    })
-                    .catch(() => {
-                        fallbackFilter(targetRoll, targetSubj);
-                    });
-            } else {
-                fallbackFilter(targetRoll, targetSubj);
-            }
-        }
-
-        function fallbackFilter(targetRoll, targetSubj) {
-            let matchCount = 0;
-            document.querySelectorAll('.student-record').forEach(row => {
-                const rowRoll = (row.getAttribute('data-roll') || '').trim().toUpperCase();
-                const rollMatch = targetRoll === 'ALL' || rowRoll === targetRoll;
-                let subjMatch = true;
-                if (targetSubj && targetSubj !== 'ALL') {
-                    const rowText = row.textContent.toUpperCase();
-                    subjMatch = rowText.includes(targetSubj.toUpperCase());
-                }
-                const match = rollMatch && subjMatch;
-                row.classList.toggle('hidden', !match);
-                if (match) matchCount++;
-            });
-
-            if (matchCount > 0) {
-                if (marksheetSection) marksheetSection.classList.remove('hidden');
-                if (noRecordNotice)   noRecordNotice.classList.add('hidden');
-            } else {
-                if (marksheetSection) marksheetSection.classList.add('hidden');
-                if (noRecordNotice) {
-                    noRecordNotice.classList.remove('hidden');
-                    if (searchedRollText) searchedRollText.textContent = isAdmin ? targetRoll : currentUser.roll_no;
-                }
-            }
-        }
-
-        // ----------------------------------------------------------------
-        // STEP 5: Initial Page Load Initialization
-        // ----------------------------------------------------------------
-        const urlParams = new URLSearchParams(window.location.search);
-        let rollParam   = (urlParams.get('roll_no') || '').trim().toUpperCase();
-
-        if (!isAdmin) {
-            // Students: always strictly enforce own roll number
-            rollParam = currentUser.roll_no.toUpperCase();
-            if (window.history && window.history.replaceState) {
-                window.history.replaceState(null, '', window.location.pathname);
-            }
-        } else if (!rollParam) {
-            // Admin: default to ALL on first load
-            rollParam = 'ALL';
-            if (selectCandidate) selectCandidate.value = 'ALL';
-            if (filterRollInput) filterRollInput.value = 'ALL';
+                    }
+                    // If no database records returned, fallback to client-side table
+                    fallbackFilter(targetRoll, targetSubj);
+                })
+                .catch(() => {
+                    fallbackFilter(targetRoll, targetSubj);
+                });
         } else {
-            // Admin arrived with ?roll_no=X
-            if (selectCandidate) {
-                const matchingOpt = Array.from(selectCandidate.options).find(o => o.value.toUpperCase() === rollParam);
-                if (matchingOpt) selectCandidate.value = matchingOpt.value;
-            }
-        }
-
-        applyScorecardFilter(rollParam);
-
-        if (filterSubjectSelect) {
-            filterSubjectSelect.addEventListener('change', () => {
-                const currRoll = isAdmin ? (filterRollInput ? filterRollInput.value.trim().toUpperCase() : 'ALL') : currentUser.roll_no;
-                applyScorecardFilter(currRoll, filterSubjectSelect.value);
-            });
-        }
-
-        // ----------------------------------------------------------------
-        // STEP 6: Search Form Submit Handler
-        // ----------------------------------------------------------------
-        if (scorecardSearchForm) {
-            scorecardSearchForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const subjVal = filterSubjectSelect ? filterSubjectSelect.value : 'ALL';
-                if (isAdmin) {
-                    const searchedVal = filterRollInput ? filterRollInput.value.trim().toUpperCase() : 'ALL';
-                    if (selectCandidate && searchedVal) {
-                        const matchOpt = Array.from(selectCandidate.options).find(o => o.value.toUpperCase() === searchedVal);
-                        if (matchOpt) selectCandidate.value = matchOpt.value;
-                    }
-                    applyScorecardFilter(searchedVal, subjVal);
-                    if (window.history && window.history.pushState) {
-                        const newUrl = window.location.pathname + (searchedVal ? `?roll_no=${encodeURIComponent(searchedVal)}` : '');
-                        window.history.pushState(null, '', newUrl);
-                    }
-                } else {
-                    applyScorecardFilter(currentUser.roll_no, subjVal);
-                }
-            });
+            fallbackFilter(targetRoll, targetSubj);
         }
     }
 
-    // ========================================================
-    // F. MODAL DIALOG CONTROLLER (No inline styles)
-    // ========================================================
-    const modalOverlay = document.getElementById('confirmationModal');
-    const openModalBtn = document.getElementById('btnOpenModal');
-    const closeModalBtn = document.getElementById('btnCancelModal');
+    function fallbackFilter(targetRoll, targetSubj) {
+        let matchCount = 0;
+        document.querySelectorAll('.student-record').forEach(row => {
+            const rowRoll = (row.getAttribute('data-roll') || '').trim().toUpperCase();
+            const rollMatch = targetRoll === 'ALL' || rowRoll === targetRoll;
+            let subjMatch = true;
+            if (targetSubj && targetSubj !== 'ALL') {
+                const rowText = row.textContent.toUpperCase();
+                subjMatch = rowText.includes(targetSubj.toUpperCase());
+            }
+            const match = rollMatch && subjMatch;
+            row.classList.toggle('hidden', !match);
+            if (match) matchCount++;
+        });
 
-    if (openModalBtn && modalOverlay) {
-        openModalBtn.addEventListener('click', (e) => {
+        if (matchCount > 0) {
+            if (marksheetSection) marksheetSection.classList.remove('hidden');
+            if (noRecordNotice) noRecordNotice.classList.add('hidden');
+        } else {
+            if (marksheetSection) marksheetSection.classList.add('hidden');
+            if (noRecordNotice) {
+                noRecordNotice.classList.remove('hidden');
+                if (searchedRollText) searchedRollText.textContent = isAdmin ? targetRoll : currentUser.roll_no;
+            }
+        }
+    }
+
+    // ----------------------------------------------------------------
+    // STEP 5: Initial Page Load Initialization
+    // ----------------------------------------------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    let rollParam = (urlParams.get('roll_no') || '').trim().toUpperCase();
+
+    if (!isAdmin) {
+        // Students: always strictly enforce own roll number
+        rollParam = currentUser.roll_no.toUpperCase();
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    } else if (!rollParam) {
+        // Admin: default to ALL on first load
+        rollParam = 'ALL';
+        if (selectCandidate) selectCandidate.value = 'ALL';
+        if (filterRollInput) filterRollInput.value = 'ALL';
+    } else {
+        // Admin arrived with ?roll_no=X
+        if (selectCandidate) {
+            const matchingOpt = Array.from(selectCandidate.options).find(o => o.value.toUpperCase() === rollParam);
+            if (matchingOpt) selectCandidate.value = matchingOpt.value;
+        }
+    }
+
+    applyScorecardFilter(rollParam);
+
+    if (filterSubjectSelect) {
+        filterSubjectSelect.addEventListener('change', () => {
+            const currRoll = isAdmin ? (filterRollInput ? filterRollInput.value.trim().toUpperCase() : 'ALL') : currentUser.roll_no;
+            applyScorecardFilter(currRoll, filterSubjectSelect.value);
+        });
+    }
+
+    // ----------------------------------------------------------------
+    // STEP 6: Search Form Submit Handler
+    // ----------------------------------------------------------------
+    if (scorecardSearchForm) {
+        scorecardSearchForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            modalOverlay.classList.add('show');
-        });
-    }
 
-    if (closeModalBtn && modalOverlay) {
-        closeModalBtn.addEventListener('click', () => {
-            modalOverlay.classList.remove('show');
-        });
-    }
-
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove('show');
-            }
-        });
-    }
-
-    // ========================================================
-    // G. OPTION SELECTION FEEDBACK (Clean CSS class toggle)
-    // ========================================================
-    const radioOptions = document.querySelectorAll('.option-card input[type="radio"]');
-    radioOptions.forEach(radio => {
-        radio.addEventListener('change', () => {
-            const questionName = radio.getAttribute('name');
-            const siblingCards = document.querySelectorAll(`input[name="${questionName}"]`);
-
-            siblingCards.forEach(s => {
-                const parentCard = s.closest('.option-card');
-                if (parentCard) {
-                    parentCard.classList.remove('option-selected');
+            const subjVal = filterSubjectSelect ? filterSubjectSelect.value : 'ALL';
+            if (isAdmin) {
+                const searchedVal = filterRollInput ? filterRollInput.value.trim().toUpperCase() : 'ALL';
+                if (selectCandidate && searchedVal) {
+                    const matchOpt = Array.from(selectCandidate.options).find(o => o.value.toUpperCase() === searchedVal);
+                    if (matchOpt) selectCandidate.value = matchOpt.value;
                 }
-            });
-
-            const chosenCard = radio.closest('.option-card');
-            if (chosenCard) {
-                chosenCard.classList.add('option-selected');
+                applyScorecardFilter(searchedVal, subjVal);
+                if (window.history && window.history.pushState) {
+                    const newUrl = window.location.pathname + (searchedVal ? `?roll_no=${encodeURIComponent(searchedVal)}` : '');
+                    window.history.pushState(null, '', newUrl);
+                }
+            } else {
+                applyScorecardFilter(currentUser.roll_no, subjVal);
             }
         });
+    }
+}
+
+// ========================================================
+// F. MODAL DIALOG CONTROLLER (No inline styles)
+// ========================================================
+const modalOverlay = document.getElementById('confirmationModal');
+const openModalBtn = document.getElementById('btnOpenModal');
+const closeModalBtn = document.getElementById('btnCancelModal');
+
+if (openModalBtn && modalOverlay) {
+    openModalBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalOverlay.classList.add('show');
     });
+}
+
+if (closeModalBtn && modalOverlay) {
+    closeModalBtn.addEventListener('click', () => {
+        modalOverlay.classList.remove('show');
+    });
+}
+
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.classList.remove('show');
+        }
+    });
+}
+
+// ========================================================
+// G. OPTION SELECTION FEEDBACK (Clean CSS class toggle)
+// ========================================================
+const radioOptions = document.querySelectorAll('.option-card input[type="radio"]');
+radioOptions.forEach(radio => {
+    radio.addEventListener('change', () => {
+        const questionName = radio.getAttribute('name');
+        const siblingCards = document.querySelectorAll(`input[name="${questionName}"]`);
+
+        siblingCards.forEach(s => {
+            const parentCard = s.closest('.option-card');
+            if (parentCard) {
+                parentCard.classList.remove('option-selected');
+            }
+        });
+
+        const chosenCard = radio.closest('.option-card');
+        if (chosenCard) {
+            chosenCard.classList.add('option-selected');
+        }
+    });
+});
 
 });
